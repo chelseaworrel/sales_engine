@@ -1,7 +1,6 @@
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/customer_repository'
-require './lib/customer'
 
 class CustomerRepositoryTest < Minitest::Test
 
@@ -32,6 +31,5 @@ class CustomerRepositoryTest < Minitest::Test
 
     assert_equal "Joey", customers.first.first_name
   end
-
 
 end

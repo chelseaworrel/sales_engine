@@ -1,13 +1,13 @@
 require 'minitest/autorun'
 require 'minitest/pride'
-require './lib/customer'
+require './lib/transaction'
 
-class CustomerTest < Minitest::Test
+class TransactionTest < Minitest::Test
 
   def test_it_has_the_expected_initialized_variables
     skip
-    customer = Customer.new("line")
-    expected = [:id, :first_name, :last_name, :created_at, :updated_at]
+    transaction = Transaction.new("line")
+    expected = [:id, :invoice_id, :credit_card_number, :credit_card_expiration_date, :result, :created_at, :updated_at]
 
     expected.each do |header|
       assert customer.respond_to?(header)
@@ -15,7 +15,7 @@ class CustomerTest < Minitest::Test
   end
 
   def test_it_has_the_expected_initialized_id
-    customer = Customer.new("line")
+    transaction = Transaction.new("line")
 
     assert customer.respond_to?(id)
   end
