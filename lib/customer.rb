@@ -1,5 +1,4 @@
 require 'csv'
-require_relative 'customer_repository'
 
 class Customer
   attr_reader :id,

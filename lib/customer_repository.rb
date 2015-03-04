@@ -27,4 +27,8 @@ cr = CustomerRepository.new("./data/customers.csv")
 
 cr.load_data
 
-puts cr.customers.first_name
+puts cr.customers
+
+cr.customers.each do |x|
+  puts x.first_name
+end
