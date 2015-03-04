@@ -41,4 +41,76 @@ class CustomerRepositoryTest < Minitest::Test
     assert_equal 4, result.id
   end
 
+  def test_it_can_find_by_first_name
+    customer_repository = CustomerRepository.new("./data/customers.csv")
+    customer_repository.load_data
+    result = customer_repository.find_by_first_name("joey")
+
+    assert_equal "Joey", result.first_name
+  end
+
+  def test_it_can_find_by_last_name
+    customer_repository = CustomerRepository.new("./data/customers.csv")
+    customer_repository.load_data
+    result = customer_repository.find_by_last_name("nader")
+
+    assert_equal "Nader", result.last_name
+  end
+
+  def test_it_can_find_by_created_at
+    customer_repository = CustomerRepository.new("./data/customers.csv")
+    customer_repository.load_data
+    result = customer_repository.find_by_created_at("2012-03-27 14:54:09 UTC")
+
+    assert_equal "2012-03-27 14:54:09 UTC", result.created_at
+  end
+
+  def test_it_can_find_by_updated_at
+    customer_repository = CustomerRepository.new("./data/customers.csv")
+    customer_repository.load_data
+    result = customer_repository.find_by_updated_at("2012-03-27 14:54:11 UTC")
+
+    assert_equal "2012-03-27 14:54:11 UTC", result.updated_at
+  end
+
+  def test_it_can_find_all_by_id
+    customer_repository = CustomerRepository.new("./data/customers.csv")
+    customer_repository.load_data
+    result = customer_repository.find_all_by_id(4)
+
+    assert_equal 1, result.size?
+  end
+
+  def test_it_can_find_all_by_first_name
+    customer_repository = CustomerRepository.new("./data/customers.csv")
+    customer_repository.load_data
+    result = customer_repository.find_all_by_first_name("mary")
+
+    assert_equal 2, result.size?
+  end
+
+  def test_it_can_find_all_by_last_name
+    customer_repository = CustomerRepository.new("./data/customers.csv")
+    customer_repository.load_data
+    result = customer_repository.find_all_by_last_name("luettgen")
+
+    assert_equal 2, result.size?
+  end
+
+  def test_it_can_find_all_by_created_at
+    customer_repository = CustomerRepository.new("./data/customers.csv")
+    customer_repository.load_data
+    result = customer_repository.find_all_by_created_at("2012-03-27 14:54:17 UTC")
+
+    assert_equal 2, result.size?
+  end
+
+  def test_it_can_find_all_by_updated_at
+    customer_repository = CustomerRepository.new("./data/customers.csv")
+    customer_repository.load_data
+    result = customer_repository.find_all_by_updated_at("2012-03-27 14:54:17 UTC")
+
+    assert_equal 3, result.size?
+  end
+
 end
