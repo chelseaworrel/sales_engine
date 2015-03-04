@@ -7,13 +7,13 @@ require_relative './merchant_repository'
 require_relative './transaction_repository'
 
 class SalesEngine
-attr_reader :customer_repository
-            :invoice_repository
-            :invoice_item_repository
-            :item_repository
-            :merchant_repository
-            :transaction_repository
-# 
+  attr_reader :customer_repository,
+              :invoice_repository,
+              :invoice_item_repository,
+              :item_repository,
+              :merchant_repository,
+              :transaction_repository
+#
 # def initialize
 #
 # end
@@ -21,5 +21,4 @@ attr_reader :customer_repository
 # def start_up
 #
 # end
-
 end
