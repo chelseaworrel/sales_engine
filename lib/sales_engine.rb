@@ -21,4 +21,5 @@ class SalesEngine
 # def start_up
 #
 # end
+# customer_repository = CustomerRepository.new(self)
 end
