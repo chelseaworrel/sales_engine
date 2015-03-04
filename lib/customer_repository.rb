@@ -3,17 +3,18 @@ require_relative 'customer'
 
 
 class CustomerRepository
-  attr_reader :customers
+  attr_reader :customers, :sales_engine
 
-  def initialize(path)
+  def initialize(path, sales_engine)
     @path = path
     @customers = []
+    @sales_engine = sales_engine
   end
 
   def load_data
     file = CSV.open(@path, headers: true, header_converters: :symbol)
     file.map do |line|
-      @customers << Customer.new(line)
+      @customers << Customer.new(line, self)
     end
     file.close
   end
