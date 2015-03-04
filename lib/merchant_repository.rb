@@ -20,6 +20,32 @@ class MerchantRepository
     end
   end
 
+  def all
+    merchants
+  end
+
+  def random
+    merchants.sample
+  end
+
+  def find_by_id(id_given)
+    @merchants.find do |merchant|
+      merchant.id == id_given
+    end
+    merchant
+  end
+
+  def find_by_name(name_given)
+    @merchants.find do |merchant|
+      merchant.name.downcase == name_given.downcase
+    end
+  end
+
+  def find_by_created_at(date_given)
+    @merchants.find do |merchant|
+      merchant.date_created
+  end
+
 end
 
 mr = MerchantRepository.new("./data/merchants.csv")
@@ -27,8 +53,9 @@ mr = MerchantRepository.new("./data/merchants.csv")
 
 mr.load_data
 
-puts mr.merchants
+puts mr.find_by_id(4).inspect
+puts mr.find_by_name("williamson Group").inspect
 
-mr.merchants.each do |x|
-  puts x.name
-end
+# mr.merchants.each do |x|
+#   x
+# end

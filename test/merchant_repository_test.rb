@@ -32,4 +32,43 @@ class MerchantRepositoryTest < Minitest::Test
     assert_equal "Schroeder-Jerde", customers.first.name
   end
 
+  def test_it_can_return_all_of_merchant_instances
+    skip
+    merchant_repository = MerchantRepository.new("./data/merchants.csv")
+    merchant_repository.load_data
+
+    assert merchant_repository.all.include?("#<Merchant:0x007fe1f28dc800>")
+  end
+
+  def test_it_can_return_a_random_instance
+    skip
+    merchant_repository = MerchantRepository.new("./data/merchants.csv")
+    merchant_repository.load_data
+
+    assert merchant_repository.random.indlude?("#<Merchant:")
+  end
+
+  def test_it_can_find_by_id
+    merchant_repository = MerchantRepository.new("./data/merchants.csv")
+    merchant_repository.load_data
+
+    assert merchant_repository.find_by_id(4).inspect.include?("#<Merchant:0x007ff20a86a6b0>")
+  end
+
+  def test_it_can_find_by_name
+    merchant_repository = MerchantRepository.new("./data/merchants.csv")
+    merchant_repository.load_data
+
+    assert merchant_repository.find_by_name("Williamson Group").inspect.include?("#<Merchant:0x007ff20a86a6b0>")
+  end
+
+  def test_it_can_find_by_created_at
+    merchant_repository = MerchantRepository.new("./data/merchants.csv")
+    merchant_repository.load_data
+
+    assert merchant_repository.find_by_created_at("Williamson Group").inspect.include?("#<Merchant:0x007ff20a86a6b0>")
+  end
+
+
+
 end

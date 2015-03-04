@@ -10,14 +10,26 @@ class CustomerRepository
     @customers = []
   end
 
-  def opener(path)
-    CSV.open(path, headers: true, header_converters: :symbol)
-  end
-
   def load_data
-    opener(@path).map do |line|
+    file = CSV.open(@path, headers: true, header_converters: :symbol)
+    file.map do |line|
       @customers << Customer.new(line)
     end
+    file.close
+  end
+
+  def all
+    @customers
+  end
+
+  def random
+    @customers.sample
+  end
+
+  def find_by_id(id)
+    @customers.find do |customer|
+       customer.id == id
+     end
   end
 
 end
@@ -27,8 +39,11 @@ cr = CustomerRepository.new("./data/customers.csv")
 
 cr.load_data
 
-puts cr.customers
+cr.find_by_id(4)
 
-cr.customers.each do |x|
-  puts x.first_name
-end
+
+#puts cr.customers.first.inspect
+
+# cr.customers.each do |x|
+#   puts x.first_name
+# end
