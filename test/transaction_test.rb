@@ -1,23 +1,61 @@
-require 'minitest/autorun'
-require 'minitest/pride'
+require_relative 'test_helper'
 require './lib/transaction'
 
 class TransactionTest < Minitest::Test
+  attr_reader :data
 
-  def test_it_has_the_expected_initialized_variables
-    skip
-    transaction = Transaction.new("line")
-    expected = [:id, :invoice_id, :credit_card_number, :credit_card_expiration_date, :result, :created_at, :updated_at]
-
-    expected.each do |header|
-      assert customer.respond_to?(header)
-    end
+  def setup
+    @data =   {
+                id:                          "1",
+                invoice_id:                  "1",
+                credit_card_number:          "4654405418249632",
+                credit_card_expiration_date: "",
+                result:                      "success",
+                created_at:                  "2012-03-27 14:54:09 UTC",
+                updated_at:                  "2012-03-27 14:54:09 UTC"
+              }
   end
 
   def test_it_has_the_expected_initialized_id
-    transaction = Transaction.new("line")
+    transaction = Transaction.new(data, nil)
 
-    assert customer.respond_to?(id)
+    assert 1, transaction.id
+  end
+
+  def test_it_has_the_expected_initialized_invoice_id
+    transaction = Transaction.new(data, nil)
+
+    assert 1, transaction.invoice_id
+  end
+
+  def test_it_has_the_expected_initialized_credit_card_number
+    transaction = Transaction.new(data, nil)
+
+    assert 4654405418249632, transaction.credit_card_number
+  end
+
+  def test_it_has_the_expected_initialized_credit_card_exp_date
+    transaction = Transaction.new(data, nil)
+
+    assert "", transaction.credit_card_expiration_date
+  end
+
+  def test_it_has_the_expected_initialized_result
+    transaction = Transaction.new(data, nil)
+
+    assert "2012-03-27 14:54:09 UTC", transaction.result
+  end
+
+  def test_it_has_the_expected_initialized_created_at
+    transaction = Transaction.new(data, nil)
+
+    assert "2012-03-27 14:54:09 UTC", transaction.created_at
+  end
+
+  def test_it_has_the_expected_initialized_updated_at
+    transaction = Transaction.new(data, nil)
+
+    assert "2012-03-27 14:54:09 UTC", transaction.updated_at
   end
 
 end
