@@ -1,4 +1,4 @@
-ire 'minitest/autorun'
+require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/invoice_item'
 
