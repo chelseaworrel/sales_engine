@@ -1,18 +1,17 @@
-require 'minitest/autorun'
-require 'minitest/pride'
+require_relative 'test_helper'
 require './lib/customer_repository'
 
 class CustomerRepositoryTest < Minitest::Test
 
   def test_it_starts_with_an_empty_array_of_customers
-    customer_repository = CustomerRepository.new("path")
+    customer_repository = CustomerRepository.new(nil)
     assert_equal [], customer_repository.customers
   end
 
 
   def test_it_can_load_data_to_customer_
-    customer_repository = CustomerRepository.new("./data/customers.csv")
-    customer_repository.load_data
+    customer_repository = CustomerRepository.new(nil)
+    customer_repository.load_data("./data/customers.csv")
 
     assert_equal "Joey", customer_repository.customers.first.first_name
     assert_equal 1, customer_repository.customers.first.id
@@ -20,25 +19,97 @@ class CustomerRepositoryTest < Minitest::Test
   end
 
   def test_it_can_return_all_customers
-    customer_repository = CustomerRepository.new("./data/customers.csv")
-    customer_repository.load_data
+    customer_repository = CustomerRepository.new(nil)
+    customer_repository.load_data("./data/customers.csv")
 
     refute customer_repository.customers.empty?
   end
 
   def test_it_can_return_random_sample
-    customer_repository = CustomerRepository.new("./data/customers.csv")
-    customer_repository.load_data
+    customer_repository = CustomerRepository.new(nil)
+    customer_repository.load_data("./data/customers.csv")
 
     assert customer_repository.random
   end
 
   def test_it_can_find_by_id
-    customer_repository = CustomerRepository.new("./data/customers.csv")
-    customer_repository.load_data
+    customer_repository = CustomerRepository.new(nil)
+    customer_repository.load_data("./data/customers.csv")
     result = customer_repository.find_by_id(4)
 
     assert_equal 4, result.id
+  end
+
+  def test_it_can_find_by_first_name
+    customer_repository = CustomerRepository.new(nil)
+    customer_repository.load_data("./data/customers.csv")
+    result = customer_repository.find_by_first_name("joey")
+
+    assert_equal "Joey", result.first_name
+  end
+
+  def test_it_can_find_by_last_name
+    customer_repository = CustomerRepository.new(nil)
+    customer_repository.load_data("./data/customers.csv")
+    result = customer_repository.find_by_last_name("nader")
+
+    assert_equal "Nader", result.last_name
+  end
+
+  def test_it_can_find_by_created_at
+    customer_repository = CustomerRepository.new(nil)
+    customer_repository.load_data("./data/customers.csv")
+    result = customer_repository.find_by_created_at("2012-03-27 14:54:09 UTC")
+
+    assert_equal "2012-03-27 14:54:09 UTC", result.created_at
+  end
+
+  def test_it_can_find_by_updated_at
+    customer_repository = CustomerRepository.new(nil)
+    customer_repository.load_data("./data/customers.csv")
+    result = customer_repository.find_by_updated_at("2012-03-27 14:54:11 UTC")
+
+    assert_equal "2012-03-27 14:54:11 UTC", result.updated_at
+  end
+
+  def test_it_can_find_all_by_id
+    customer_repository = CustomerRepository.new(nil)
+    customer_repository.load_data("./data/customers.csv")
+    result = customer_repository.find_all_by_id(4)
+
+    assert_equal 1, result.count
+  end
+
+  def test_it_can_find_all_by_first_name
+    customer_repository = CustomerRepository.new(nil)
+    customer_repository.load_data("./data/customers.csv")
+    result = customer_repository.find_all_by_first_name("mary")
+
+    assert_equal 1, result.count
+  end
+
+  def test_it_can_find_all_by_last_name
+    customer_repository = CustomerRepository.new(nil)
+    customer_repository.load_data("./data/customers.csv")
+    result = customer_repository.find_all_by_last_name("luettgen")
+
+    assert_equal 6, result.count
+  end
+
+  def test_it_can_find_all_by_created_at
+    customer_repository = CustomerRepository.new(nil)
+    customer_repository.load_data("./data/customers.csv")
+    result = customer_repository.find_all_by_created_at("2012-03-27 14:54:17 UTC")
+
+    assert_equal 3, result.count
+  end
+
+  def test_it_can_find_all_by_updated_at
+    customer_repository = CustomerRepository.new(nil)
+    customer_repository.load_data("./data/customers.csv")
+    result = customer_repository.find_all_by_updated_at("2012-03-27 14:54:17 UTC")
+
+    assert_equal 3, result.count
   end
 
 end

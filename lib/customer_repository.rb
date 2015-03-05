@@ -5,20 +5,19 @@ require_relative 'customer'
 class CustomerRepository
   attr_reader :customers, :sales_engine
 
-  def initialize(path, sales_engine)
-    @path = path
+  def initialize(sales_engine)
     @customers = []
     @sales_engine = sales_engine
   end
 
-  def load_data
-    file = CSV.open(@path, headers: true, header_converters: :symbol)
+  def load_data(path)
+    file = CSV.open(path, headers: true, header_converters: :symbol)
     file.map do |line|
       @customers << Customer.new(line, self)
     end
     file.close
   end
-  # id,first_name,last_name,created_at,updated_at
+
   def all
     @customers
   end
@@ -65,13 +64,13 @@ class CustomerRepository
 
   def find_all_by_first_name(first_name)
     @customers.find_all do |customer|
-      customer.first_name == first_name
+      customer.first_name.downcase == first_name.downcase
     end
   end
 
   def find_all_by_last_name(last_name)
     @customers.find_all do |customer|
-      customer.last_name == last_name
+      customer.last_name.downcase == last_name.downcase
     end
   end
 
@@ -87,21 +86,3 @@ class CustomerRepository
     end
   end
 end
-
-
-
-cr = CustomerRepository.new("./data/customers.csv")
-
-
-cr.load_data
-
-# cr.find_by_id(4)
-#
-# puts cr.find_all_by(4)
-
-
-#puts cr.customers.first.inspect
-
-# cr.customers.each do |x|
-#   puts x.first_name
-# end

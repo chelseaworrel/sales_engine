@@ -44,18 +44,7 @@ class MerchantRepository
   def find_by_created_at(date_given)
     @merchants.find do |merchant|
       merchant.date_created
+    end
   end
 
 end
-
-mr = MerchantRepository.new("./data/merchants.csv")
-
-
-mr.load_data
-
-puts mr.find_by_id(4).inspect
-puts mr.find_by_name("williamson Group").inspect
-
-# mr.merchants.each do |x|
-#   x
-# end
