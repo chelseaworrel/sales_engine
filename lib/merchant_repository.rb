@@ -73,4 +73,8 @@ class MerchantRepository
       merchant.updated_at == updated_at
     end
   end
+
+  def find_items(id)
+    @sales_engine.find_items_by_merchant_id(id)
+  end
 end

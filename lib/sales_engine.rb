@@ -21,12 +21,17 @@ class SalesEngine
     @transaction_repository = TransactionRepository.new(self)
     @transaction_repository.load_data("./data/transactions.csv")
     @item_repository = ItemRepository.new(self)
-    @item_repository.load_data("./data/items.csv"
+    @item_repository.load_data("./data/items.csv")
     @invoice_repository = InvoiceRepository.new(self)
     @invoice_repository.load_data("./data/invoices.csv")
     @invoice_item_repository = InvoiceItemRepository.new(self)
     @invoice_item_repository.load_data("./data/invoice_items.csv")
   end
+
+  def find_items_by_merchant_id(id)
+    @item_repository.find_all_by_merchant_id(id)
+  end
+
 end
 
 
