@@ -96,4 +96,12 @@ class MerchantRepositoryTest < Minitest::Test
     assert_equal 8, result.count
   end
 
+  def test_it_can_access_parent_with_items
+    parent = Minitest::Mock.new
+    merchant_repository = MerchantRepository.new(parent)
+    parent.expect(:find_items_by_merchant_id, [1, 2], [1])
+    assert_equal [1, 2], merchant_repository.find_items(1)
+    parent.verify
+  end
+
 end
