@@ -1,6 +1,6 @@
 require_relative 'test_helper'
 require './lib/merchant'
-require './lib/sales_engine'
+#require './lib/sales_engine'
 
 class MerchantTest < Minitest::Test
   attr_reader :data
@@ -38,12 +38,12 @@ class MerchantTest < Minitest::Test
     assert "2012-03-27 14:53:59 UTC", merchant.updated_at
   end
 
-  def test_it_can_find_all_of_its_items_by_its_id
-    sales_engine = SalesEngine.new
-    sales_engine.startup
-    merchant.id = 5
-
-
+  def test_it_can_talk_to_the_repository_with_items
+    parent = Minitest::Mock.new
+    merchant = Merchant.new(data, parent)
+    parent.expect(:find_items, [1, 2], [1])
+    assert_equal [1, 2], merchant.items
+    parent.verify 
   end
 
 end

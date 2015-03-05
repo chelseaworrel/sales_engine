@@ -1,9 +1,8 @@
-# require 'csv'
 require_relative './customer_repository'
-# require_relative './invoice_repository'
-# require_relative './invoice_item_repository'
-require_relative './item_repository'
 require_relative './merchant_repository'
+require_relative './invoice_repository'
+require_relative './invoice_item_repository'
+require_relative './item_repository'
 require_relative './transaction_repository'
 
 class SalesEngine
@@ -22,13 +21,17 @@ class SalesEngine
     @transaction_repository = TransactionRepository.new(self)
     @transaction_repository.load_data("./data/transactions.csv")
     @item_repository = ItemRepository.new(self)
-    @item_repository.load_data("./data/items.csv"
-
+    @item_repository.load_data("./data/items.csv")
+    @invoice_repository = InvoiceRepository.new(self)
+    @invoice_repository.load_data("./data/invoices.csv")
+    @invoice_item_repository = InvoiceItemRepository.new(self)
+    @invoice_item_repository.load_data("./data/invoice_items.csv")
   end
-end
 
-def find_items_by_merchant_id(id)
-  @item_repository.find_all_by_merchant_id(id)
+  def find_items_by_merchant_id(id)
+    @item_repository.find_all_by_merchant_id(id)
+  end
+
 end
 
 
@@ -37,3 +40,9 @@ sales_engine = SalesEngine.new
 sales_engine.startup.inspect
 
 #puts sales_engine.transaction_repository.transactions
+
+# sales_engine = SalesEngine.new
+#
+# sales_engine.startup.inspect
+#
+# puts sales_engine.customer_repository.customers
