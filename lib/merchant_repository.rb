@@ -3,48 +3,74 @@ require_relative 'merchant'
 
 
 class MerchantRepository
-  attr_reader :merchants
+  attr_reader :merchants, :sales_engine
 
-  def initialize(path)
-    @path = path
+  def initialize(sales_engine)
     @merchants = []
+    @sales_engine = sales_engine
   end
 
-  def opener(path)
-    CSV.open(path, headers: true, header_converters: :symbol)
-  end
-
-  def load_data
-    opener(@path).map do |line|
-      @merchants << Merchant.new(line)
+  def load_data(path)
+    file = CSV.open(path, headers: true, header_converters: :symbol)
+    file.map do |line|
+      @merchants << Merchant.new(line, self)
     end
+    file.close
   end
 
   def all
-    merchants
+    @merchants
   end
 
   def random
-    merchants.sample
+    @merchants.sample
   end
 
-  def find_by_id(id_given)
+  def find_by_id(id)
     @merchants.find do |merchant|
-      merchant.id == id_given
-    end
-    merchant
-  end
-
-  def find_by_name(name_given)
-    @merchants.find do |merchant|
-      merchant.name.downcase == name_given.downcase
+       merchant.id == id
     end
   end
 
-  def find_by_created_at(date_given)
+  def find_by_name(name)
     @merchants.find do |merchant|
-      merchant.date_created
+       merchant.name.downcase == name.downcase
     end
   end
 
+  def find_by_created_at(created_at)
+    @merchants.find do |merchant|
+       merchant.created_at == created_at
+    end
+  end
+
+  def find_by_updated_at(updated_at)
+    @merchants.find do |merchant|
+       merchant.updated_at == updated_at
+    end
+  end
+
+  def find_all_by_id(id)
+    @merchants.find_all do |merchant|
+      merchant.id == id
+    end
+  end
+
+  def find_all_by_name(name)
+    @merchants.find_all do |merchant|
+      merchant.name.downcase == name.downcase
+    end
+  end
+
+  def find_all_by_created_at(created_at)
+    @merchants.find_all do |merchant|
+      merchant.created_at == created_at
+    end
+  end
+
+  def find_all_by_updated_at(updated_at)
+    @merchants.find_all do |merchant|
+      merchant.updated_at == updated_at
+    end
+  end
 end

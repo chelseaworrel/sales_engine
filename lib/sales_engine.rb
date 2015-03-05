@@ -17,6 +17,8 @@ class SalesEngine
   def startup
     @customer_repository = CustomerRepository.new(self)
     @customer_repository.load_data("./data/customers.csv")
+    @merchant_repository = MerchantRepository.new(self)
+    @merchant_repository.load_data("./data/merchants.csv")
     @transaction_repository = TransactionRepository.new(self)
     @transaction_repository.load_data("./data/transactions.csv")
 
@@ -28,4 +30,4 @@ sales_engine = SalesEngine.new
 
 sales_engine.startup.inspect
 
-puts sales_engine.transaction_repository.transactions
+#puts sales_engine.transaction_repository.transactions

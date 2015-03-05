@@ -1,74 +1,99 @@
-require 'minitest/autorun'
-require 'minitest/pride'
+require_relative 'test_helper'
 require './lib/merchant_repository'
 
 class MerchantRepositoryTest < Minitest::Test
 
-  def test_it_can_take_a_path_when_initialized
-    skip
-    merchant_repository = MerchantRepository.new("path")
-    assert_equal "path", merchant_repository.path
-  end
-
-  def test_it_starts_with_an_empty_array_of_customers
-    merchant_repository = MerchantRepository.new("path")
+  def test_it_starts_with_an_empty_array_of_merchants
+    merchant_repository = MerchantRepository.new(nil)
     assert_equal [], merchant_repository.merchants
   end
 
-  def test_it_can_open_a_CSV_file
-    skip
-    merchant_repository = MerchantRepository.new("path")
-    $stdout = StringIO.new
-    file_open = merchant_repository.opener("./data/merchants.csv")
-    assert file_open.include?("id")
+
+  def test_it_can_load_data_to_merchant
+    merchant_repository = MerchantRepository.new(nil)
+    merchant_repository.load_data("./data/merchants.csv")
+
+    assert_equal "Schroeder-Jerde", merchant_repository.merchants.first.name
+    assert_equal 1, merchant_repository.merchants.first.id
+    assert_equal "Leffler, Rice and Leuschke", merchant_repository.merchants[20].name
   end
 
-  def test_it_can_load_data_to_customer
-    skip
-    merchant_repository = MerchantRepository.new("./data/merchants.csv")
-    merchants = []
-    merchant_repository.load_data
+  def test_it_can_return_all_merchants
+    merchant_repository = MerchantRepository.new(nil)
+    merchant_repository.load_data("./data/merchants.csv")
 
-    assert_equal "Schroeder-Jerde", customers.first.name
+    refute merchant_repository.merchants.empty?
   end
 
-  def test_it_can_return_all_of_merchant_instances
-    skip
-    merchant_repository = MerchantRepository.new("./data/merchants.csv")
-    merchant_repository.load_data
+  def test_it_can_return_random_sample
+    merchant_repository = MerchantRepository.new(nil)
+    merchant_repository.load_data("./data/merchants.csv")
 
-    assert merchant_repository.all.include?("#<Merchant:0x007fe1f28dc800>")
-  end
-
-  def test_it_can_return_a_random_instance
-    skip
-    merchant_repository = MerchantRepository.new("./data/merchants.csv")
-    merchant_repository.load_data
-
-    assert merchant_repository.random.indlude?("#<Merchant:")
+    assert merchant_repository.random
   end
 
   def test_it_can_find_by_id
-    merchant_repository = MerchantRepository.new("./data/merchants.csv")
-    merchant_repository.load_data
+    merchant_repository = MerchantRepository.new(nil)
+    merchant_repository.load_data("./data/merchants.csv")
+    result = merchant_repository.find_by_id(4)
 
-    assert merchant_repository.find_by_id(4).inspect.include?("#<Merchant:0x007ff20a86a6b0>")
+    assert_equal 4, result.id
   end
 
   def test_it_can_find_by_name
-    merchant_repository = MerchantRepository.new("./data/merchants.csv")
-    merchant_repository.load_data
+    merchant_repository = MerchantRepository.new(nil)
+    merchant_repository.load_data("./data/merchants.csv")
+    result = merchant_repository.find_by_name("Kozey Group")
 
-    assert merchant_repository.find_by_name("Williamson Group").inspect.include?("#<Merchant:0x007ff20a86a6b0>")
+    assert_equal "Kozey Group", result.name
   end
 
   def test_it_can_find_by_created_at
-    merchant_repository = MerchantRepository.new("./data/merchants.csv")
-    merchant_repository.load_data
+    merchant_repository = MerchantRepository.new(nil)
+    merchant_repository.load_data("./data/merchants.csv")
+    result = merchant_repository.find_by_created_at("2012-03-27 14:53:59 UTC")
 
-    assert merchant_repository.find_by_created_at("Williamson Group").inspect.include?("#<Merchant:0x007ff20a86a6b0>")
+    assert_equal "2012-03-27 14:53:59 UTC", result.created_at
   end
 
+  def test_it_can_find_by_updated_at
+    merchant_repository = MerchantRepository.new(nil)
+    merchant_repository.load_data("./data/merchants.csv")
+    result = merchant_repository.find_by_updated_at("2012-03-27 14:53:59 UTC")
 
+    assert_equal "2012-03-27 14:53:59 UTC", result.updated_at
+  end
+
+  def test_it_can_find_all_by_id
+    merchant_repository = MerchantRepository.new(nil)
+    merchant_repository.load_data("./data/merchants.csv")
+    result = merchant_repository.find_all_by_id(4)
+
+    assert_equal 1, result.count
+  end
+
+  def test_it_can_find_all_by_name
+    merchant_repository = MerchantRepository.new(nil)
+    merchant_repository.load_data("./data/merchants.csv")
+    result = merchant_repository.find_all_by_name("Brown Inc")
+
+    assert_equal 1, result.count
+  end
+
+  def test_it_can_find_all_by_created_at
+    merchant_repository = MerchantRepository.new(nil)
+    merchant_repository.load_data("./data/merchants.csv")
+    result = merchant_repository.find_all_by_created_at("2012-03-27 14:53:59 UTC")
+
+    assert_equal 9, result.count
+  end
+
+  def test_it_can_find_all_by_updated_at
+    merchant_repository = MerchantRepository.new(nil)
+    merchant_repository.load_data("./data/merchants.csv")
+    result = merchant_repository.find_all_by_updated_at("2012-03-27 14:53:59 UTC")
+
+    assert_equal 8, result.count
+  end
 
 end
