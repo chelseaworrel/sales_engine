@@ -1,6 +1,5 @@
-require_relative 'test_helper'
+require './test/test_helper'
 require './lib/customer_repository'
-
 class CustomerRepositoryTest < Minitest::Test
 
   def test_it_starts_with_an_empty_array_of_customers
