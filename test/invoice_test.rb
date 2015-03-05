@@ -1,23 +1,47 @@
-require 'minitest/autorun'
-require 'minitest/pride'
+require_relative 'test_helper'
 require './lib/invoice'
 
 class InvoiceTest < Minitest::Test
+  attr_reader :data
 
-  def test_it_has_the_expected_initialized_variables
-    skip
-    invoice = Invoice.new("line")
-    expected = [:id, :customer_id, :merchant_id, :status, :created_at, :updated_at]
-
-    expected.each do |header|
-      assert invoice.respond_to?(header)
-    end
+  def setup
+    @data =   {
+                id:          "1",
+                customer_id: "1",
+                merchant_id: "26",
+                status:      "shipped",
+                created_at: "2012-03-25 09:54:09 UTC",
+                updated_at: "2012-03-25 09:54:09 UTC"
+              }
   end
 
   def test_it_has_the_expected_initialized_id
-    invoice = Invoice.new("line")
+    invoice = Invoice.new(data, nil)
 
-    assert invoice.respond_to?(id)
+    assert 1, invoice.id
   end
 
+  def test_it_has_the_expected_initialized_customer_id
+    invoice = Invoice.new(data, nil)
+
+    assert "1", invoice.customer_id
+  end
+
+  def test_it_has_the_expected_initialized_merchant_id
+    invoice = Invoice.new(data, nil)
+
+    assert "26", invoice.merchant_id
+  end
+
+  def test_it_has_the_expected_initialized_created_at
+    invoice = Invoice.new(data, nil)
+
+    assert "2012-03-25 09:54:09 UTC", invoice.created_at
+  end
+
+  def test_it_has_the_expected_initialized_updated_at
+    invoice = Invoice.new(data, nil)
+
+    assert "2012-03-25 09:54:09 UTC", invoice.updated_at
+  end
 end
