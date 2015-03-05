@@ -9,7 +9,7 @@ class CustomerRepositoryTest < Minitest::Test
   end
 
 
-  def test_it_can_load_data_to_customer_
+  def test_it_can_load_data_to_customer
     customer_repository = CustomerRepository.new(nil)
     customer_repository.load_data("./data/customers.csv")
 

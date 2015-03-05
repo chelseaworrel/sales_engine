@@ -3,32 +3,98 @@ require_relative 'invoice'
 
 
 class InvoiceRepository
-  attr_reader :invoices
+  attr_reader :invoices, :sales_engine
 
-  def initialize(path)
-    @path = path
+  def initialize(sales_engine)
     @invoices = []
+    @sales_engine = sales_engine
   end
 
-  def opener(path)
-    CSV.open(path, headers: true, header_converters: :symbol)
+  def load_data(path)
+    file = CSV.open(path, headers: true, header_converters: :symbol)
+    file.map do |line|
+      @invoices << Invoice.new(line, self)
+    end
+    file.close
   end
 
-  def load_data
-    opener(@path).map do |line|
-      @invoices << Invoice.new(line)
+  def all
+    @invoices
+  end
+
+  def random
+    @invoices.sample
+  end
+
+  def find_by_id(id)
+    @invoices.find do |invoice|
+       invoice.id == id
     end
   end
 
+  def find_by_customer_id(customer_id)
+    @invoices.find do |invoice|
+       invoice.customer_id == customer_id
+    end
+  end
+
+  def find_by_merchant_id(merchant_id)
+    @invoices.find do |invoice|
+       invoice.merchant_id == merchant_id
+    end
+  end
+
+  def find_by_status(status)
+    @invoices.find do |invoice|
+       invoice.status == status
+    end
+  end
+
+  def find_by_created_at(created_at)
+    @invoices.find do |invoice|
+       invoice.created_at == created_at
+    end
+  end
+
+  def find_by_updated_at(updated_at)
+    @invoices.find do |invoice|
+       invoice.updated_at == updated_at
+    end
+  end
+
+  def find_all_by_id(id)
+    @invoices.find_all do |invoice|
+      invoice.id == id
+    end
+  end
+
+  def find_all_by_customer_id(customer_id)
+    @invoices.find_all do |invoice|
+      invoice.customer_id == customer_id
+    end
+  end
+
+  def find_all_by_merchant_id(merchant_id)
+    @invoices.find_all do |invoice|
+      invoice.merchant_id == merchant_id
+    end
+  end
+
+  def find_all_by_status(status)
+    @invoices.find_all do |invoice|
+      invoice.status == status
+    end
+  end
+
+  def find_all_by_created_at(created_at)
+    @invoices.find_all do |invoice|
+      invoice.created_at == created_at
+    end
+  end
+
+  def find_all_by_updated_at(updated_at)
+    @invoices.find_all do |invoice|
+      invoice.updated_at == updated_at
+    end
+  end
 end
-
-ir = InvoiceRepository.new("./data/invoices.csv")
-
-
- ir.load_data
-
- puts ir.invoices.first.merchant_id
-
-# ir.invoices.each do |x|
-#   puts x.merchant_id
-# end
