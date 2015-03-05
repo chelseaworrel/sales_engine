@@ -20,7 +20,6 @@ class CustomerRepositoryTest < Minitest::Test
 
   def test_it_can_return_all_customers
     customer_repository = CustomerRepository.new(nil)
-    customer_repository.load_data("./data/customers.csv")
 
     refute customer_repository.customers.empty?
   end
