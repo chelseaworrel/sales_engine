@@ -13,4 +13,8 @@ class Merchant
     @repository = repository
   end
 
+  def items(id)
+    @repository.find_items(id)
+  end
+
 end

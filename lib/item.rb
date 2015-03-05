@@ -18,5 +18,4 @@ class Item
     @updated_at  = line[:updated_at]
     @repository  = repository
   end
-
 end
