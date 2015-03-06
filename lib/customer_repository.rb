@@ -27,61 +27,61 @@ class CustomerRepository
   end
 
   def find_by_id(id)
-    customers.find do |customer|
+    customers.detect do |customer|
        customer.id == id
     end
   end
 
   def find_by_first_name(first_name)
-    customers.find do |customer|
+    customers.detect do |customer|
        customer.first_name.downcase == first_name.downcase
     end
   end
 
   def find_by_last_name(last_name)
-    customers.find do |customer|
+    customers.detect do |customer|
        customer.last_name.downcase == last_name.downcase
     end
   end
 
   def find_by_created_at(created_at)
-    customers.find do |customer|
+    customers.detect do |customer|
        customer.created_at == created_at
     end
   end
 
   def find_by_updated_at(updated_at)
-    customers.find do |customer|
+    customers.detect do |customer|
        customer.updated_at == updated_at
     end
   end
 
   def find_all_by_id(id)
-    customers.find_all do |customer|
+    customers.select do |customer|
       customer.id == id
     end
   end
 
   def find_all_by_first_name(first_name)
-    customers.find_all do |customer|
+    customers.select do |customer|
       customer.first_name.downcase == first_name.downcase
     end
   end
 
   def find_all_by_last_name(last_name)
-    customers.find_all do |customer|
+    customers.select do |customer|
       customer.last_name.downcase == last_name.downcase
     end
   end
 
   def find_all_by_created_at(created_at)
-    customers.find_all do |customer|
+    customers.select do |customer|
       customer.created_at == created_at
     end
   end
 
   def find_all_by_updated_at(updated_at)
-    customers.find_all do |customer|
+    customers.select do |customer|
       customer.updated_at == updated_at
     end
   end
