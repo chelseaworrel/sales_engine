@@ -109,4 +109,8 @@ class InvoiceItemRepository
       invoice_item.updated_at == updated_at
     end
   end
+
+  def find_invoices(id)
+    @sales_engine.find_invoices_by_invoice_item_id(id)
+  end
 end

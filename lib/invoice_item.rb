@@ -19,4 +19,7 @@ class InvoiceItem
     @repository   = repository
   end
 
+  def invoices
+    @repository.find_invoices(id)
+  end
 end
