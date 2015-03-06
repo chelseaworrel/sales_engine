@@ -27,49 +27,49 @@ class MerchantRepository
   end
 
   def find_by_id(id)
-    merchants.find do |merchant|
+    merchants.detect do |merchant|
        merchant.id == id
     end
   end
 
   def find_by_name(name)
-    merchants.find do |merchant|
+    merchants.detect do |merchant|
        merchant.name.downcase == name.downcase
     end
   end
 
   def find_by_created_at(created_at)
-    merchants.find do |merchant|
+    merchants.detect do |merchant|
        merchant.created_at == created_at
     end
   end
 
   def find_by_updated_at(updated_at)
-    merchants.find do |merchant|
+    merchants.detect do |merchant|
        merchant.updated_at == updated_at
     end
   end
 
   def find_all_by_id(id)
-    merchants.find_all do |merchant|
+    merchants.select do |merchant|
       merchant.id == id
     end
   end
 
   def find_all_by_name(name)
-    merchants.find_all do |merchant|
+    merchants.select do |merchant|
       merchant.name.downcase == name.downcase
     end
   end
 
   def find_all_by_created_at(created_at)
-    merchants.find_all do |merchant|
+    merchants.select do |merchant|
       merchant.created_at == created_at
     end
   end
 
   def find_all_by_updated_at(updated_at)
-    merchants.find_all do |merchant|
+    merchants.select do |merchant|
       merchant.updated_at == updated_at
     end
   end
@@ -83,6 +83,6 @@ class MerchantRepository
   end
 
   def most_revenue(x)
-    
+
   end
 end

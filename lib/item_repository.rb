@@ -27,85 +27,85 @@ class ItemRepository
   end
 
   def find_by_id(id)
-    items.find do |item|
+    items.detect do |item|
        item.id == id
     end
   end
 
   def find_by_name(name)
-    items.find do |item|
+    items.detect do |item|
        item.name.downcase == name.downcase
     end
   end
 
   def find_by_description(description)
-    items.find do |item|
+    items.detect do |item|
        item.description.downcase == description.downcase
     end
   end
 
   def find_by_unit_price(unit_price)
-    items.find do |item|
+    items.detect do |item|
        item.unit_price == unit_price
     end
   end
 
   def find_by_merchant_id(merchant_id)
-    items.find do |item|
+    items.detect do |item|
        item.merchant_id == merchant_id
     end
   end
 
   def find_by_created_at(created_at)
-    items.find do |item|
+    items.detect do |item|
        item.created_at == created_at
     end
   end
 
   def find_by_updated_at(updated_at)
-    items.find do |item|
+    items.detect do |item|
        item.updated_at == updated_at
     end
   end
 
   def find_all_by_id(id)
-    items.find_all do |item|
+    items.select do |item|
       item.id == id
     end
   end
 
   def find_all_by_name(name)
-    items.find_all do |item|
+    items.select do |item|
       item.name.downcase == name.downcase
     end
   end
 
   def find_all_by_description(description)
-    items.find_all do |item|
+    items.select do |item|
       item.description.downcase == description.downcase
     end
   end
 
   def find_all_by_unit_price(unit_price)
-    items.find_all do |item|
+    items.select do |item|
       item.unit_price == unit_price
     end
   end
 
   def find_all_by_merchant_id(merchant_id)
-    items.find_all do |item|
+    items.select do |item|
       item.merchant_id == merchant_id
     end
   end
 
   def find_all_by_created_at(created_at)
-    items.find_all do |item|
+    items.select do |item|
       item.created_at == created_at
     end
   end
 
   def find_all_by_updated_at(updated_at)
-    items.find_all do |item|
+    items.select do |item|
       item.updated_at == updated_at
     end
   end
