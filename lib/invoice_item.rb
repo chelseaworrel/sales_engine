@@ -22,4 +22,8 @@ class InvoiceItem
   def invoices
     @repository.find_invoices(id)
   end
+
+  def items
+    @repository.find_items(id)
+  end
 end
