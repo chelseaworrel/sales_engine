@@ -60,6 +60,13 @@ class SalesEngine
     item_repository.find_by_id(id)
   end
 
+  def find_transactions_by_customer_id(id)
+    invoices = find_invoices_by_customer_id(id)
+    invoices.select do |invoice|
+      transaction_repository.find_all_by_invoice_id(invoice.id)
+    end
+    invoices
+  end
 end
 
 

@@ -13,80 +13,84 @@ class CustomerRepository
   def load_data(path)
     file = CSV.open(path, headers: true, header_converters: :symbol)
     file.map do |line|
-      @customers << Customer.new(line, self)
+      customers << Customer.new(line, self)
     end
     file.close
   end
 
   def all
-    @customers
+    customers
   end
 
   def random
-    @customers.sample
+    customers.sample
   end
 
   def find_by_id(id)
-    @customers.find do |customer|
+    customers.find do |customer|
        customer.id == id
     end
   end
 
   def find_by_first_name(first_name)
-    @customers.find do |customer|
+    customers.find do |customer|
        customer.first_name.downcase == first_name.downcase
     end
   end
 
   def find_by_last_name(last_name)
-    @customers.find do |customer|
+    customers.find do |customer|
        customer.last_name.downcase == last_name.downcase
     end
   end
 
   def find_by_created_at(created_at)
-    @customers.find do |customer|
+    customers.find do |customer|
        customer.created_at == created_at
     end
   end
 
   def find_by_updated_at(updated_at)
-    @customers.find do |customer|
+    customers.find do |customer|
        customer.updated_at == updated_at
     end
   end
 
   def find_all_by_id(id)
-    @customers.find_all do |customer|
+    customers.find_all do |customer|
       customer.id == id
     end
   end
 
   def find_all_by_first_name(first_name)
-    @customers.find_all do |customer|
+    customers.find_all do |customer|
       customer.first_name.downcase == first_name.downcase
     end
   end
 
   def find_all_by_last_name(last_name)
-    @customers.find_all do |customer|
+    customers.find_all do |customer|
       customer.last_name.downcase == last_name.downcase
     end
   end
 
   def find_all_by_created_at(created_at)
-    @customers.find_all do |customer|
+    customers.find_all do |customer|
       customer.created_at == created_at
     end
   end
 
   def find_all_by_updated_at(updated_at)
-    @customers.find_all do |customer|
+    customers.find_all do |customer|
       customer.updated_at == updated_at
     end
   end
 
   def find_invoices(id)
     sales_engine.find_invoices_by_customer_id(id)
+  end
+
+  def find_transactions(id)
+    sales_engine.find_transactions_with_customer_id(id)
   end
 end
