@@ -19,7 +19,11 @@ class InvoiceItem
     @repository   = repository
   end
 
-  def invoices
-    @repository.find_invoices(id)
+  def invoice
+    repository.find_invoice(id)
+  end
+
+  def item
+    repository.find_item(id)
   end
 end
