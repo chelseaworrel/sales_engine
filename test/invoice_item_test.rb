@@ -58,4 +58,12 @@ class InvoiceItemTest < Minitest::Test
     assert "2012-03-27 14:54:09 UTC", invoice_item.updated_at
   end
 
+  def test_it_can_talk_to_the_repository_with_invoices
+    parent = Minitest::Mock.new
+    invoice = InvoiceItem.new(data, parent)
+    parent.expect(:find_invoices, [1, 2], [1])
+    assert_equal [1, 2], invoice.invoices
+    parent.verify
+  end
+
 end

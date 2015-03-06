@@ -143,4 +143,12 @@ class InvoiceItemRepositoryTest < Minitest::Test
 
     assert_equal 97, result.count
   end
+  # 
+  # def test_it_can_access_parent_with_invoices
+  #   parent = Minitest::Mock.new
+  #   invoice_item_repository = InvoiceItem.new(parent)
+  #   parent.expect(:find_invoices_by_invoice_item_id, [1, 2], [1])
+  #   assert_equal [1, 2], invoice_item_repository.find_invoices(1)
+  #   parent.verify
+  # end
 end

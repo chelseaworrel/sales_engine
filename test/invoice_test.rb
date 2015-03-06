@@ -43,5 +43,5 @@ class InvoiceTest < Minitest::Test
     invoice = Invoice.new(data, nil)
 
     assert "2012-03-25 09:54:09 UTC", invoice.updated_at
-  end
+  end  
 end
