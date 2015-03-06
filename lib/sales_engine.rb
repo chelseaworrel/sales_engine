@@ -60,6 +60,14 @@ class SalesEngine
     item_repository.find_by_id(id)
   end
 
+  def find_items_by_invoice_id(id)
+    items = invoice_item_repository.invoice_items.select do |invoice_item|
+      if invoice_item.invoice_id == id
+           invoice_item.item_id
+      end
+      items
+    end
+  end
 end
 
 

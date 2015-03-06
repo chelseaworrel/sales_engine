@@ -115,4 +115,10 @@ class SalesEngineTest < Minitest::Test
     assert_equal "Item Ea Voluptatum", item.name
   end
 
+  def test_it_can_find_items_with_invoice_id_via_invoice_items
+    items = sales_engine.find_items_by_invoice_id(3)
+
+    assert_equal [1, 2, 3], items
+  end
+
 end
