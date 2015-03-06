@@ -18,4 +18,12 @@ class Item
     @updated_at  = line[:updated_at]
     @repository  = repository
   end
+
+  def invoice_items
+    repository.find_invoice_items(id)
+  end
+
+  def merchant
+    repository.find_merchant(id)
+  end
 end

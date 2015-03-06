@@ -58,4 +58,12 @@ class TransactionTest < Minitest::Test
     assert "2012-03-27 14:54:09 UTC", transaction.updated_at
   end
 
+  def test_it_can_talk_to_the_repository_with_invoice
+    parent = Minitest::Mock.new
+    transaction = Transaction.new(data, parent)
+    parent.expect(:find_invoice, "pizza", [1])
+    assert_equal "pizza", transaction.invoice
+    parent.verify
+  end
+
 end
