@@ -116,6 +116,7 @@ class SalesEngineTest < Minitest::Test
   end
 
   def test_it_can_return_an_array_of_transactions_for_customer
+    skip
     transactions = sales_engine.find_transactions_by_customer_id(3)
 
     assert_equal [1, 2], transactions

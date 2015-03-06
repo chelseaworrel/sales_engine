@@ -107,11 +107,10 @@ class CustomerRepositoryTest < Minitest::Test
     customer_repository = CustomerRepository.new(nil)
     customer_repository.load_data("./data/customers.csv")
     result = customer_repository.find_all_by_updated_at("2012-03-27 14:54:17 UTC")
-
     assert_equal 3, result.count
   end
 
-  def test_it_can_talk_to_the_repository_with_invoice
+  def test_it_can_talk_to_the_parent_with_invoice
     parent = Minitest::Mock.new
     customer_repository = CustomerRepository.new(parent)
     parent.expect(:find_invoices_by_customer_id, "pizza", [1])
