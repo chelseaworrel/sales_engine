@@ -121,4 +121,11 @@ class SalesEngineTest < Minitest::Test
     assert_equal [1, 2], transactions
   end
 
+  def test_it_can_find_items_with_invoice_id_via_invoice_items
+    skip
+    items = sales_engine.find_items_by_invoice_id(3)
+
+    assert_equal [1, 2, 3], items
+  end
+
 end

@@ -43,5 +43,37 @@ class InvoiceTest < Minitest::Test
     invoice = Invoice.new(data, nil)
 
     assert "2012-03-25 09:54:09 UTC", invoice.updated_at
-  end  
+  end
+
+  def test_it_can_talk_to_the_repository_with_transactions
+    parent = Minitest::Mock.new
+    invoice = Invoice.new(data, parent)
+    parent.expect(:find_transactions, [1, 2], [1])
+    assert_equal [1, 2], invoice.transactions
+    parent.verify
+  end
+
+  def test_it_can_talk_to_the_repository_with_invoice_items
+    parent = Minitest::Mock.new
+    invoice = Invoice.new(data, parent)
+    parent.expect(:find_invoice_items, [1, 2], [1])
+    assert_equal [1, 2], invoice.invoice_items
+    parent.verify
+  end
+
+  def test_it_can_talk_to_the_repository_with_items
+    parent = Minitest::Mock.new
+    invoice = Invoice.new(data, parent)
+    parent.expect(:find_items, [1, 2], [1])
+    assert_equal [1, 2], invoice.items
+    parent.verify
+  end
+  # 
+  # def test_it_can_talk_to_the_repository_with_customer
+  #   parent = Minitest::Mock.new
+  #   invoice = Invoice.new(data, parent)
+  #   parent.expect(:find_customer, [1, 2], [1])
+  #   assert_equal [1, 2], invoice.customer
+  #   parent.verify
+  # end
 end

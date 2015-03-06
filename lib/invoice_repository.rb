@@ -97,4 +97,24 @@ class InvoiceRepository
       invoice.updated_at == updated_at
     end
   end
+
+  def find_transactions(id)
+    sales_engine.find_transactions_by_invoice_id(id)
+  end
+
+  def find_invoice_items(id)
+    sales_engine.find_invoice_items_by_invoice_id(id)
+  end
+
+  def find_items(id)
+    sales_engine.find_items_by_invoice_id(id)
+  end
+
+  def find_customer(id)
+    sales_engine.find_customer_by_id(id)
+  end
+
+  def find_merchant(id)
+    sales_engine.find_merchant_by_id(id)
+  end
 end
