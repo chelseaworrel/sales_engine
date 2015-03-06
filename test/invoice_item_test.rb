@@ -74,11 +74,4 @@ class InvoiceItemTest < Minitest::Test
     parent.verify
   end
 
-  def test_it_can_talk_to_the_repository_with_customer
-    parent = Minitest::Mock.new
-    invoice_item = InvoiceItem.new(data, parent)
-    parent.expect(:find_customer, [1, 2], [1])
-    assert_equal [1, 2], invoice_item.customer
-    parent.verify
-  end
 end

@@ -117,7 +117,7 @@ end
 
 #Refactor:
 #find the duplicates and only put those methods in a module
-#credit_card.transactions.all 
+#credit_card.transactions.all
 # require 'the file location'
 # Class the class you are using
 # include WhateverTheHeckWeWant
@@ -128,4 +128,3 @@ end
 #      datum.id == id
 #   end
 # end
-end

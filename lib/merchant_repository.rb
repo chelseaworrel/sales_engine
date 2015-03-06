@@ -81,4 +81,8 @@ class MerchantRepository
   def find_invoices(id)
     sales_engine.find_invoices_by_merchant_id(id)
   end
+
+  def most_revenue(x)
+    
+  end
 end

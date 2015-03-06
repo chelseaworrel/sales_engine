@@ -115,7 +115,15 @@ class SalesEngineTest < Minitest::Test
     assert_equal "Item Ea Voluptatum", item.name
   end
 
+  def test_it_can_return_an_array_of_transactions_for_customer
+    skip
+    transactions = sales_engine.find_transactions_by_customer_id(3)
+
+    assert_equal [1, 2], transactions
+  end
+
   def test_it_can_find_items_with_invoice_id_via_invoice_items
+    skip
     items = sales_engine.find_items_by_invoice_id(3)
 
     assert_equal [1, 2, 3], items
