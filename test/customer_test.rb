@@ -44,4 +44,12 @@ class CustomerTest < Minitest::Test
     assert "2012-03-27 14:54:09 UTC", customer.updated_at
   end
 
+  def test_it_can_talk_to_the_repository_with_invoice
+    parent = Minitest::Mock.new
+    customer = Customer.new(data, parent)
+    parent.expect(:find_invoices, [1,2], [1])
+    assert_equal [1,2], customer.invoices
+    parent.verify
+  end
+
 end

@@ -43,7 +43,15 @@ class MerchantTest < Minitest::Test
     merchant = Merchant.new(data, parent)
     parent.expect(:find_items, [1, 2], [1])
     assert_equal [1, 2], merchant.items
-    parent.verify 
+    parent.verify
+  end
+
+  def test_it_can_talk_to_the_repository_with_invoices
+    parent = Minitest::Mock.new
+    merchant = Merchant.new(data, parent)
+    parent.expect(:find_invoices, [1, 2], [1])
+    assert_equal [1, 2], merchant.invoices
+    parent.verify
   end
 
 end

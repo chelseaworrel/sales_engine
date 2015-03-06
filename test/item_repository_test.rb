@@ -143,4 +143,20 @@ class ItemRepositoryTest < Minitest::Test
     assert_equal 170, result.count
   end
 
+  def test_it_can_talk_to_the_repository_with_invoices
+    parent = Minitest::Mock.new
+    item_repository = ItemRepository.new(parent)
+    parent.expect(:find_invoice_items_by_item_id, [1, 2], [1])
+    assert_equal [1, 2], item_repository.find_invoice_items(1)
+    parent.verify
+  end
+
+  def test_it_can_talk_to_the_repository_with_merchants
+    parent = Minitest::Mock.new
+    item_repository = ItemRepository.new(parent)
+    parent.expect(:find_merchant_by_id, "pizza", [1])
+    assert_equal "pizza", item_repository.find_merchant(1)
+    parent.verify
+  end
+
 end

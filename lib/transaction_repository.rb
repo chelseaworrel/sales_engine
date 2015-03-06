@@ -18,8 +18,6 @@ class TransactionRepository
     file.close
   end
 
-  #id,invoice_id,credit_card_number,credit_card_expiration_date,result,created_at,updated_at
-
   def all
     @transactions
   end
@@ -110,5 +108,9 @@ class TransactionRepository
     @transactions.find_all do |transaction|
       transaction.updated_at == updated_at
     end
+  end
+
+  def find_invoice(id)
+    sales_engine.find_invoice_by_id(id)
   end
 end
