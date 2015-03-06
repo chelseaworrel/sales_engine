@@ -159,4 +159,20 @@ class InvoiceItemRepositoryTest < Minitest::Test
     assert_equal [1, 2], invoice_item_repository.find_items(1)
     parent.verify
   end
+
+  def test_it_can_access_parent_with_invoice
+    parent = Minitest::Mock.new
+    invoice_item_repository = InvoiceItemRepository.new(parent)
+    parent.expect(:find_invoice_by_id, [1, 2], [1])
+    assert_equal [1, 2], invoice_item_repository.find_invoice(1)
+    parent.verify
+  end
+
+  def test_it_can_access_parent_with_item
+    parent = Minitest::Mock.new
+    invoice_item_repository = InvoiceItemRepository.new(parent)
+    parent.expect(:find_item_by_id, [1, 2], [1])
+    assert_equal [1, 2], invoice_item_repository.find_item(1)
+    parent.verify
+  end
 end
