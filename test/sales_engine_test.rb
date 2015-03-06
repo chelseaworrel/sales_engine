@@ -103,5 +103,16 @@ class SalesEngineTest < Minitest::Test
     assert_equal 4, invoices.count
   end
 
+  def test_it_can_find_invoice_by_id
+    invoice = sales_engine.find_invoice_by_id(3)
+
+    assert_equal "shipped", invoice.status
+  end
+
+  def test_it_can_find_item_by_id
+    item = sales_engine.find_item_by_id(3)
+
+    assert_equal "Item Ea Voluptatum", item.name
+  end
 
 end
