@@ -13,87 +13,87 @@ class InvoiceRepository
   def load_data(path)
     file = CSV.open(path, headers: true, header_converters: :symbol)
     file.map do |line|
-      @invoices << Invoice.new(line, self)
+      invoices << Invoice.new(line, self)
     end
     file.close
   end
 
   def all
-    @invoices
+    invoices
   end
 
   def random
-    @invoices.sample
+    invoices.sample
   end
 
   def find_by_id(id)
-    @invoices.find do |invoice|
+    invoices.find do |invoice|
        invoice.id == id
     end
   end
 
   def find_by_customer_id(customer_id)
-    @invoices.find do |invoice|
+    invoices.find do |invoice|
        invoice.customer_id == customer_id
     end
   end
 
   def find_by_merchant_id(merchant_id)
-    @invoices.find do |invoice|
+    invoices.find do |invoice|
        invoice.merchant_id == merchant_id
     end
   end
 
   def find_by_status(status)
-    @invoices.find do |invoice|
+    invoices.find do |invoice|
        invoice.status == status
     end
   end
 
   def find_by_created_at(created_at)
-    @invoices.find do |invoice|
+    invoices.find do |invoice|
        invoice.created_at == created_at
     end
   end
 
   def find_by_updated_at(updated_at)
-    @invoices.find do |invoice|
+    invoices.find do |invoice|
        invoice.updated_at == updated_at
     end
   end
 
   def find_all_by_id(id)
-    @invoices.find_all do |invoice|
+    invoices.find_all do |invoice|
       invoice.id == id
     end
   end
 
   def find_all_by_customer_id(customer_id)
-    @invoices.find_all do |invoice|
+    invoices.find_all do |invoice|
       invoice.customer_id == customer_id
     end
   end
 
   def find_all_by_merchant_id(merchant_id)
-    @invoices.find_all do |invoice|
+    invoices.find_all do |invoice|
       invoice.merchant_id == merchant_id
     end
   end
 
   def find_all_by_status(status)
-    @invoices.find_all do |invoice|
+    invoices.find_all do |invoice|
       invoice.status == status
     end
   end
 
   def find_all_by_created_at(created_at)
-    @invoices.find_all do |invoice|
+    invoices.find_all do |invoice|
       invoice.created_at == created_at
     end
   end
 
   def find_all_by_updated_at(updated_at)
-    @invoices.find_all do |invoice|
+    invoices.find_all do |invoice|
       invoice.updated_at == updated_at
     end
   end
@@ -106,9 +106,10 @@ class InvoiceRepository
     sales_engine.find_invoice_items_by_invoice_id(id)
   end
 
-  def find_items(id)
-    sales_engine.find_items_by_invoice_id(id)
-  end
+  # def find_items(id)
+  #   sales_engine.find_items_by_invoice_id(id)
+  # end
+  #need to finish relationship pathway
 
   def find_customer(id)
     sales_engine.find_customer_by_id(id)
