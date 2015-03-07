@@ -20,26 +20,18 @@ class Customer
   end
 
   def transactions
-    customer_transactions = invoices.map do |invoice|
-      invoice.transactions
-    end.flatten
-    customer_transactions
+    customer_transactions = invoices.map { |invoice| invoice.transactions }.flatten
   end
 
   def favorite_merchant
-    successful_transactions = transactions.select do |transaction|
-      transaction.result == "success"
-    end
-    successful_invoices = successful_transactions.map do |sv|
-      sv.invoice
-    end
-    successful_merchants = successful_invoices.map do |invoice|
-      invoice.merchant
-    end
-    successful_merchants.max_by do |merchant|
-      successful_merchants.count(merchant)
+    successful_transactions = transactions.select { |transaction| transaction.result == "success" }
+
+    successful_invoices = successful_transactions.map { |sv| sv.invoice }
+
+    successful_merchants = successful_invoices.map { |invoice| invoice.merchant }
+
+    successful_merchants.max_by { |merchant| successful_merchants.count(merchant) }
       #figure out if they want count or name
-    end
   end
 
 end
