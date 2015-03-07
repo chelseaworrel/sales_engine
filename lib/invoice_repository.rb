@@ -18,6 +18,10 @@ class InvoiceRepository
     file.close
   end
 
+  def inspect
+    "#<#{self.class} #{@invoices.size} rows>"
+  end
+
   def all
     invoices
   end

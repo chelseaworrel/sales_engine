@@ -18,6 +18,10 @@ class CustomerRepository
     file.close
   end
 
+  def inspect
+  "#<#{self.class} #{@customers.size} rows>"
+  end
+
   def all
     customers
   end

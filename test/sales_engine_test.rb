@@ -1,11 +1,11 @@
-require './test/test_helper'
-require './lib/sales_engine'
+require_relative '../test/test_helper'
+require_relative '../lib/sales_engine'
 
 class SalesEngineTest < Minitest::Test
   attr_reader :sales_engine
 
   def setup
-    @sales_engine = SalesEngine.new
+    @sales_engine = SalesEngine.new(nil)
     @sales_engine.startup
     unless @sales_engine
       @sales_engine

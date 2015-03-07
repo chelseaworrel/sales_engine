@@ -11,21 +11,26 @@ class SalesEngine
               :invoice_item_repository,
               :item_repository,
               :merchant_repository,
-              :transaction_repository
+              :transaction_repository,
+              :filepath
+
+  def intialize(filepath)
+    @filepath = filepath
+  end
 
   def startup
     @customer_repository = CustomerRepository.new(self)
-    @customer_repository.load_data("./data/customers.csv")
+    @customer_repository.load_data("../sales_engine/data/customers.csv")
     @merchant_repository = MerchantRepository.new(self)
-    @merchant_repository.load_data("./data/merchants.csv")
+    @merchant_repository.load_data("../sales_engine/data/merchants.csv")
     @transaction_repository = TransactionRepository.new(self)
-    @transaction_repository.load_data("./data/transactions.csv")
+    @transaction_repository.load_data("../sales_engine/data/transactions.csv")
     @item_repository = ItemRepository.new(self)
-    @item_repository.load_data("./data/items.csv")
+    @item_repository.load_data("../sales_engine/data/items.csv")
     @invoice_repository = InvoiceRepository.new(self)
-    @invoice_repository.load_data("./data/invoices.csv")
+    @invoice_repository.load_data("../sales_engine/data/invoices.csv")
     @invoice_item_repository = InvoiceItemRepository.new(self)
-    @invoice_item_repository.load_data("./data/invoice_items.csv")
+    @invoice_item_repository.load_data("../sales_engine/data/invoice_items.csv")
   end
 
   def find_items_by_merchant_id(id)
@@ -82,10 +87,6 @@ class SalesEngine
 
 end
 
-
-sales_engine = SalesEngine.new
-
-sales_engine.startup.inspect
 
 #puts sales_engine.transaction_repository.transactions
 

@@ -1,6 +1,6 @@
-require './test/test_helper'
-require './lib/invoice'
-require './lib/sales_engine'
+require_relative '../test/test_helper'
+require_relative '../lib/invoice'
+require_relative '../lib/sales_engine'
 
 class InvoiceTest < Minitest::Test
   attr_reader :data
@@ -79,7 +79,7 @@ class InvoiceTest < Minitest::Test
   end
 
   def test_it_can_get_its_items
-    sales_engine = SalesEngine.new
+    sales_engine = SalesEngine.new(nil)
     sales_engine.startup
 
     assert_equal 8, sales_engine.invoice_repository.invoices[0].items.size

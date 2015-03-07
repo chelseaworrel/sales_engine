@@ -1,5 +1,6 @@
-require './test/test_helper'
-require './lib/customer'
+require_relative '../test/test_helper'
+require_relative '../lib/customer'
+require_relative '../lib/sales_engine'
 
 class CustomerTest < Minitest::Test
   attr_reader :data
@@ -50,6 +51,20 @@ class CustomerTest < Minitest::Test
     parent.expect(:find_invoices, [1,2], [1])
     assert_equal [1,2], customer.invoices
     parent.verify
+  end
+
+  def test_it_can_get_its_transactions
+    sales_engine = SalesEngine.new
+    sales_engine.startup
+
+    assert_equal 7, sales_engine.customer_repository.customers[0].transactions.size
+  end
+
+  def test_it_can_get_its_favorite_merchant
+    sales_engine = SalesEngine.new
+    sales_engine.startup
+
+    assert_equal "Rutherford, Bogan and Leannon", sales_engine.customer_repository.customers[50].favorite_merchant.name
   end
 
 end
