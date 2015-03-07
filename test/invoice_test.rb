@@ -1,5 +1,6 @@
 require './test/test_helper'
 require './lib/invoice'
+require './lib/sales_engine'
 
 class InvoiceTest < Minitest::Test
   attr_reader :data
@@ -61,19 +62,26 @@ class InvoiceTest < Minitest::Test
     parent.verify
   end
 
-  def test_it_can_talk_to_the_repository_with_items
+  def test_it_can_talk_to_the_repository_with_invoice_items
     parent = Minitest::Mock.new
     invoice = Invoice.new(data, parent)
-    parent.expect(:find_items, [1, 2], [1])
-    assert_equal [1, 2], invoice.items
+    parent.expect(:find_invoice_items, [1, 2], [1])
+    assert_equal [1, 2], invoice.invoice_items
     parent.verify
   end
-  # 
-  # def test_it_can_talk_to_the_repository_with_customer
-  #   parent = Minitest::Mock.new
-  #   invoice = Invoice.new(data, parent)
-  #   parent.expect(:find_customer, [1, 2], [1])
-  #   assert_equal [1, 2], invoice.customer
-  #   parent.verify
-  # end
+
+  def test_it_can_talk_to_the_repository_with_customer
+    parent = Minitest::Mock.new
+    invoice = Invoice.new(data, parent)
+    parent.expect(:find_customer, [1, 2], [1])
+    assert_equal [1, 2], invoice.customer
+    parent.verify
+  end
+
+  def test_it_can_get_its_items
+    sales_engine = SalesEngine.new
+    sales_engine.startup
+
+    assert_equal 8, sales_engine.invoice_repository.invoices[0].items.size
+  end
 end
