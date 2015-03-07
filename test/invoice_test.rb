@@ -1,6 +1,6 @@
-require './test/test_helper'
-require './lib/invoice'
-require './lib/sales_engine'
+require_relative '../test/test_helper'
+require_relative '../lib/invoice'
+require_relative '../lib/sales_engine'
 
 class InvoiceTest < Minitest::Test
   attr_reader :data

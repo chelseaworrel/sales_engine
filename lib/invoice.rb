@@ -26,16 +26,14 @@ class Invoice
   end
 
   def items
-    invoice_items.map do |invoice_item|
-      invoice_item.item
-    end
+    invoice_items.map { |invoice_item| invoice_item.item }
   end
 
   def customer
-    repository.find_customer(id)
+    repository.find_customer(customer_id)
   end
 
   def merchant
-    repository.find_merchant(id)
+    repository.find_merchant(merchant_id)
   end
 end

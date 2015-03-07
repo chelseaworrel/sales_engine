@@ -18,6 +18,10 @@ class TransactionRepository
     file.close
   end
 
+  def inspect
+    "#<#{self.class} #{@transactions.size} rows>"
+  end
+
   def all
     transactions
   end

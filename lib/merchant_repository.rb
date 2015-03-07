@@ -18,6 +18,10 @@ class MerchantRepository
     file.close
   end
 
+  def inspect
+    "#<#{self.class} #{merchants.size} rows>"
+  end
+
   def all
     merchants
   end

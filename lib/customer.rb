@@ -20,6 +20,18 @@ class Customer
   end
 
   def transactions
-    repository.find_transactions(id)
+    customer_transactions = invoices.map { |invoice| invoice.transactions }.flatten
   end
+
+  def favorite_merchant
+    successful_transactions = transactions.select { |transaction| transaction.result == "success" }
+
+    successful_invoices = successful_transactions.map { |sv| sv.invoice }
+
+    successful_merchants = successful_invoices.map { |invoice| invoice.merchant }
+
+    successful_merchants.max_by { |merchant| successful_merchants.count(merchant) }
+      #figure out if they want count or name
+  end
+
 end
