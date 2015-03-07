@@ -81,5 +81,4 @@ class ItemTest < Minitest::Test
 
     assert_equal "2012-03-10 16:54:33 UTC", sales_engine.item_repository.items[2].best_day
   end
-
 end
