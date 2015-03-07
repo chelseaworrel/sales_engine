@@ -26,4 +26,9 @@ class Item
   def merchant
     repository.find_merchant(id)
   end
+
+  def best_day
+    maximum_item = invoice_items.max_by { |invoice_item| invoice_item.quantity }
+    maximum_item.invoice.created_at
+  end
 end

@@ -160,5 +160,4 @@ class InvoiceRepositoryTest < Minitest::Test
     parent.verify
   end
 
-
 end

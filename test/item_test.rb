@@ -1,5 +1,6 @@
 require_relative '../test/test_helper'
 require_relative '../lib/item'
+require_relative '../lib/sales_engine'
 
 class ItemTest < Minitest::Test
   attr_reader :data
@@ -72,6 +73,13 @@ class ItemTest < Minitest::Test
     parent.expect(:find_merchant, "pizza", [1])
     assert_equal "pizza", item.merchant
     parent.verify
+  end
+
+  def test_it_can_find_its_best_day
+    sales_engine = SalesEngine.new
+    sales_engine.startup
+
+    assert_equal "2012-03-10 16:54:33 UTC", sales_engine.item_repository.items[2].best_day
   end
 
 end
