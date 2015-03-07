@@ -106,11 +106,6 @@ class InvoiceRepository
     sales_engine.find_invoice_items_by_invoice_id(id)
   end
 
-  # def find_items(id)
-  #   sales_engine.find_items_by_invoice_id(id)
-  # end
-  #need to finish relationship pathway
-
   def find_customer(id)
     sales_engine.find_customer_by_id(id)
   end

@@ -127,4 +127,38 @@ class InvoiceRepositoryTest < Minitest::Test
 
     assert_equal 0, result.count
   end
+
+  def test_it_can_talk_to_the_parent_with_transactions
+    parent = Minitest::Mock.new
+    invoice_repository = InvoiceRepository.new(parent)
+    parent.expect(:find_invoice_items_by_invoice_id, [1, 2], [1])
+    assert_equal [1, 2], invoice_repository.find_invoice_items(1)
+    parent.verify
+  end
+
+  def test_it_can_talk_to_the_parent_with_invoice_items
+    parent = Minitest::Mock.new
+    invoice_repository = InvoiceRepository.new(parent)
+    parent.expect(:find_transactions_by_invoice_id, "pizza", [1])
+    assert_equal "pizza", invoice_repository.find_transactions(1)
+    parent.verify
+  end
+
+  def test_it_can_talk_to_the_parent_with_customer
+    parent = Minitest::Mock.new
+    invoice_repository = InvoiceRepository.new(parent)
+    parent.expect(:find_invoice_items_by_invoice_id, "pizza", [1])
+    assert_equal "pizza", invoice_repository.find_invoice_items(1)
+    parent.verify
+  end
+
+  def test_it_can_talk_to_the_parent_with_merchant
+    parent = Minitest::Mock.new
+    invoice_repository = InvoiceRepository.new(parent)
+    parent.expect(:find_merchant_by_id, "pizza", [1])
+    assert_equal "pizza", invoice_repository.find_merchant(1)
+    parent.verify
+  end
+
+
 end
