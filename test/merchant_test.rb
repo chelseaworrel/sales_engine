@@ -1,6 +1,6 @@
 require_relative '../test/test_helper'
 require_relative '../lib/merchant'
-#require './lib/sales_engine'
+require_relative '../lib/sales_engine'
 
 class MerchantTest < Minitest::Test
   attr_reader :data
@@ -54,4 +54,10 @@ class MerchantTest < Minitest::Test
     parent.verify
   end
 
+  def test_it_can_find_its_total_revenue
+    sales_engine = SalesEngine.new
+    sales_engine.startup
+
+    assert_equal 111222, sales_engine.merchant_repository.merchants[2].revenue
+  end
 end

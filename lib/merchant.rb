@@ -1,3 +1,7 @@
+require 'bigdecimal'
+require 'bigdecimal/util'
+
+
 class Merchant
   attr_reader :id,
               :name,
@@ -19,6 +23,20 @@ class Merchant
 
   def invoices
     repository.find_invoices(id)
+  end
+
+  def revenue
+    #   successful_invoices = invoices.select do |invoice|
+    #     invoice.transactions.select do |transaction|
+    #       transaction.result == "fail"
+    #   end
+    # end
+    # revenue = successful_invoices.map do |invoice|
+    #   invoice.invoice_items.reduce(0) do |sum, inv_item|
+    #     sum += inv_item.revenue
+    #   end
+    # end.inject(:+)
+    # revenue.to_digits
   end
 
 end
