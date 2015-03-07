@@ -121,4 +121,9 @@ class ItemRepository
   def find_merchant(id)
     sales_engine.find_merchant_by_id(id)
   end
+
+  def most_revenue(x)
+    #all instances of item, find invoice items,
+    #unit price times the invoice item quantity
+  end
 end
