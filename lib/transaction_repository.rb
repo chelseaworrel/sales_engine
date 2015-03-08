@@ -30,6 +30,12 @@ class TransactionRepository
     transactions.sample
   end
 
+  def all_successful
+    transactions.select do |transaction|
+      transaction.result == "success"
+    end
+  end
+
   def find_by_id(id)
     transactions.detect do |transaction|
        transaction.id == id

@@ -155,4 +155,12 @@ class TransactionRepositoryTest < Minitest::Test
     parent.verify
   end
 
+  def test_it_can_find_all_successful_transactions
+    transaction_repository = TransactionRepository.new(nil)
+    transaction_repository.load_data("./data/transactions.csv")
+    result = transaction_repository.all_successful
+
+    assert_equal 4648, result.count
+  end
+
 end
