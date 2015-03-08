@@ -26,17 +26,21 @@ class Merchant
   end
 
   def revenue
-    #   successful_invoices = invoices.select do |invoice|
-    #     invoice.transactions.select do |transaction|
-    #       transaction.result == "fail"
-    #   end
-    # end
-    # revenue = successful_invoices.map do |invoice|
-    #   invoice.invoice_items.reduce(0) do |sum, inv_item|
-    #     sum += inv_item.revenue
-    #   end
-    # end.inject(:+)
-    # revenue.to_digits
+    merchant_transactions = invoices.map do |invoice|
+      invoice.transactions
+    end.flatten
+    successful_transactions = merchant_transactions.select do |transaction|
+        transaction.successful?
+    end
+    successful_invoices = successful_transactions.map do |transaction|
+      transaction.invoice
+    end
+    revenue = successful_invoices.map do |invoice|
+      invoice.invoice_items.reduce(0) do |sum, inv_item|
+        sum += inv_item.revenue
+      end
+    end.inject(:+)
+    revenue.to_digits
   end
 
 end

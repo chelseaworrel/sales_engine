@@ -24,7 +24,7 @@ class Customer
   end
 
   def favorite_merchant
-    successful_transactions = transactions.select { |transaction| transaction.result == "success" }
+    successful_transactions = transactions.select { |transaction| transaction.successful? }
 
     successful_invoices = successful_transactions.map { |sv| sv.invoice }
 

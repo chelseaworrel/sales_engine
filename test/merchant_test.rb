@@ -58,6 +58,6 @@ class MerchantTest < Minitest::Test
     sales_engine = SalesEngine.new
     sales_engine.startup
 
-    assert_equal 111222, sales_engine.merchant_repository.merchants[2].revenue
+    assert_equal "338055.54", sales_engine.merchant_repository.merchants[2].revenue
   end
 end
