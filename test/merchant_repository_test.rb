@@ -118,11 +118,11 @@ class MerchantRepositoryTest < Minitest::Test
   def test_it_can_find_most_revenue
     sales_engine = SalesEngine.new("./data")
     sales_engine.startup
-    result = sales_engine.merchant_repository.most_revenue(2).inspect
+    result = sales_engine.merchant_repository.most_revenue(2)
 
-    assert_equal 2, result
-    # assert result.is_a?(Array)
-    # assert result[1].is_a?(Merchant)
+    assert_equal 2, result.count
+    assert result.is_a?(Array)
+    assert result[1].is_a?(Merchant)
   end
 
   def test_it_can_find_most_items
@@ -130,9 +130,7 @@ class MerchantRepositoryTest < Minitest::Test
     sales_engine.startup
     result = sales_engine.merchant_repository.most_items(1)
 
-     assert_equal 1, result.count
-    assert result.is_a?(Array)
-    assert result[0].is_a?(Merchant)
+     assert_equal "Kassulke, O'Hara and Quitzon", result.first.name
   end
 
   def test_it_can_find_total_revenue_by_date
