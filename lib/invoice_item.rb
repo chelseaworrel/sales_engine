@@ -8,7 +8,7 @@ class InvoiceItem
               :unit_price,
               :created_at,
               :updated_at,
-              :revenue, 
+              :revenue,
               :repository
 
   def initialize(line, repository)

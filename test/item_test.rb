@@ -79,6 +79,6 @@ class ItemTest < Minitest::Test
     sales_engine = SalesEngine.new
     sales_engine.startup
 
-    assert_equal "2012-03-10 16:54:33 UTC", sales_engine.item_repository.items[2].best_day
+    assert_equal "2012-03-10", sales_engine.item_repository.items[2].best_day
   end
 end

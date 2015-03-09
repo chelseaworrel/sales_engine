@@ -1,4 +1,6 @@
 require 'csv'
+require 'bigdecimal'
+require 'bigdecimal/util'
 require_relative 'merchant'
 
 
@@ -87,6 +89,24 @@ class MerchantRepository
   end
 
   def most_revenue(x)
+    merchants.max_by.first(x) do |merchant|
+      merchant.revenue
+    end
+  end
 
+  def most_items(x)
+    merchants.max_by.first(x) do |merchant|
+      merchant.items.count
+    end
+  end
+
+  def revenue(date)
+    revenues = merchants.map do |merchant|
+      merchant.revenue(date)
+    end
+    no_nil_revenues = revenues.select do |revenue|
+      !revenue.nil?
+    end
+    no_nil_revenues.map { |rev| rev.to_d }.inject(:+).to_digits
   end
 end

@@ -1,5 +1,6 @@
 require_relative '../test/test_helper'
 require_relative '../lib/merchant_repository'
+require_relative '../lib/sales_engine'
 
 class MerchantRepositoryTest < Minitest::Test
 
@@ -112,4 +113,31 @@ class MerchantRepositoryTest < Minitest::Test
     parent.verify
   end
 
+  def test_it_can_find_most_revenue
+    sales_engine = SalesEngine.new
+    sales_engine.startup
+    result = sales_engine.merchant_repository.most_revenue(2)
+
+    assert_equal 2, result.count
+    assert result.is_a?(Array)
+    assert result[1].is_a?(Merchant)
+  end
+
+  def test_it_can_find_most_items
+    sales_engine = SalesEngine.new
+    sales_engine.startup
+    result = sales_engine.merchant_repository.most_items(1)
+
+    assert_equal 1, result.count
+    assert result.is_a?(Array)
+    assert result[0].is_a?(Merchant)
+  end
+
+  def test_it_can_find_total_revenue_by_date
+    sales_engine = SalesEngine.new
+    sales_engine.startup
+    result = sales_engine.merchant_repository.revenue("2012-03-27")
+
+    assert_equal "1908368.05", result
+  end
 end
