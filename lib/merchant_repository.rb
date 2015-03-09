@@ -107,6 +107,6 @@ class MerchantRepository
     no_nil_revenues = revenues.select do |revenue|
       !revenue.nil?
     end
-    no_nil_revenues.map { |rev| rev.to_d }.inject(:+).to_digits
+    no_nil_revenues.map { |rev| rev.to_d }.inject(:+)
   end
 end

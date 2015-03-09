@@ -1,3 +1,5 @@
+require 'bigdecimal'
+require 'bigdecimal/util'
 require_relative '../test/test_helper'
 require_relative '../lib/merchant'
 require_relative '../lib/sales_engine'
@@ -55,30 +57,30 @@ class MerchantTest < Minitest::Test
   end
 
   def test_it_can_find_its_total_revenue
-    sales_engine = SalesEngine.new
+    sales_engine = SalesEngine.new("./data")
     sales_engine.startup
 
-    assert_equal "338055.54", sales_engine.merchant_repository.merchants[2].revenue
+    assert_equal "338055.54", sales_engine.merchant_repository.merchants[2].revenue.to_digits
   end
 
   def test_it_can_find_its_total_revenue_by_date
-    sales_engine = SalesEngine.new
+    sales_engine = SalesEngine.new("./data")
     sales_engine.startup
 
-    assert_equal "24641.43", sales_engine.merchant_repository.merchants[0].revenue("2012-03-25")
+    assert_equal "24641.43", sales_engine.merchant_repository.merchants[0].revenue("2012-03-25").to_digits
   end
 
   def test_it_can_find_its_favorite_customer
-    sales_engine = SalesEngine.new
+    sales_engine = SalesEngine.new("./data")
     sales_engine.startup
 
     assert_equal "Kuhn", sales_engine.merchant_repository.merchants[50].favorite_customer.last_name
   end
 
   def test_it_can_find_pending_customers
-    sales_engine = SalesEngine.new
+    sales_engine = SalesEngine.new("./data")
     sales_engine.startup
 
-    assert_equal 8, sales_engine.merchant_repository.merchants[33].customers_with_pending_invoices.count
+    assert_equal 2, sales_engine.merchant_repository.merchants[33].customers_with_pending_invoices.count
   end
 end
