@@ -1,3 +1,5 @@
+require 'bigdecimal/util'
+
 class Item
   attr_reader :id,
               :name,
@@ -24,11 +26,22 @@ class Item
   end
 
   def merchant
-    repository.find_merchant(id)
+    repository.find_merchant(merchant_id)
   end
 
   def best_day
     maximum_item = invoice_items.max_by { |invoice_item| invoice_item.quantity }
     maximum_item.invoice.created_at
+  end
+
+  def revenue
+    successful_invoice_item = invoice_items.select do |inv_item|
+      inv_item.invoice.transactions.each do |tran|
+        tran.successful?
+      end
+    end
+    successful_invoice_item.reduce(0) do |sum, inv_item|
+      sum + inv_item.revenue
+    end.to_digits
   end
 end

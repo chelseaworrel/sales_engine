@@ -1,5 +1,6 @@
 require_relative '../test/test_helper'
 require_relative '../lib/item_repository'
+require_relative '../lib/sales_engine'
 
 class ItemRepositoryTest < Minitest::Test
 
@@ -159,6 +160,14 @@ class ItemRepositoryTest < Minitest::Test
     parent.expect(:find_merchant_by_id, "pizza", [1])
     assert_equal "pizza", item_repository.find_merchant(1)
     parent.verify
+  end
+
+  def test_it_can_find_most_revenues
+    sales_engine = SalesEngine.new
+    sales_engine.startup
+    result = sales_engine.item_repository.most_revenue(3)
+
+    assert_equal 3, result
   end
 
 end

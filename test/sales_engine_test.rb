@@ -5,7 +5,7 @@ class SalesEngineTest < Minitest::Test
   attr_reader :sales_engine
 
   def setup
-    @sales_engine = SalesEngine.new
+    @sales_engine = SalesEngine.new("./data")
     @sales_engine.startup
     unless @sales_engine
       @sales_engine
@@ -13,7 +13,7 @@ class SalesEngineTest < Minitest::Test
   end
 
   def test_it_exists
-    assert SalesEngine.new
+    assert SalesEngine.new("./data")
   end
 
   def test_it_can_start_up
@@ -50,7 +50,7 @@ class SalesEngineTest < Minitest::Test
   end
 
   def test_it_can_load_items_data_at_startup
-    sales_engine.item_repository.load_data("./data/items.csv")
+    sales_engine.item_repository.load_data("/customer.csv")
 
     assert_equal "Item Qui Esse", sales_engine.item_repository.items.first.name
   end
@@ -132,6 +132,4 @@ class SalesEngineTest < Minitest::Test
 
     assert_equal 8, invoice_items_by_id.count
   end
-
-
 end
