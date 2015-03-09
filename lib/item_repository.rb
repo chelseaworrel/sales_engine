@@ -123,7 +123,10 @@ class ItemRepository
   end
 
   def most_revenue(x)
-    #all instances of item, find invoice items,
-    #unit price times the invoice item quantity
+    items.sort_by do |item|
+      item.invoice_items.each do |inv_item|
+        inv_item.revenue
+      end.flatten
+    end
   end
 end

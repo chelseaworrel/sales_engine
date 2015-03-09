@@ -1,5 +1,6 @@
 require 'bigdecimal'
 require 'bigdecimal/util'
+require 'date'
 
 
 class Merchant
@@ -44,6 +45,9 @@ class Merchant
   # end
 
   def revenue(date=nil)
+    if !date.nil?
+      date = parse_date(date.to_s)
+    end
     merchant_transactions = invoices.map do |invoice|
       invoice.transactions
     end.flatten
@@ -54,21 +58,25 @@ class Merchant
       transaction.invoice
     end
     if date.nil?
-      successful_invoices_parsed = successful_invoices
+      parsed_successful_invoices = successful_invoices
     else
-      successful_invoices_parsed = successful_invoices.select do |invoice|
+      parsed_successful_invoices = successful_invoices.select do |invoice|
         invoice.created_at == date
       end
     end
-    successful_invoice_items = successful_invoices_parsed.map do |invoice|
+    successful_invoice_items = parsed_successful_invoices.map do |invoice|
       invoice.invoice_items
     end.flatten
     revenue = successful_invoice_items.reduce(0) do |sum, inv_item|
       sum += inv_item.revenue
     end
     if !revenue.zero?
-     revenue.to_digits
+      revenue
    end
+  end
+
+  def parse_date(date)
+    Date.parse(date)
   end
 
   def favorite_customer
@@ -90,17 +98,13 @@ class Merchant
   end
 
   def customers_with_pending_invoices
-    merchant_transactions = invoices.map do |invoice|
-      invoice.transactions
-    end.flatten
-    unsuccessful_transactions = merchant_transactions.reject do |transaction|
+    unsuccessful_invoices = invoices.reject do |invoice|
+      invoice.transactions.any? do |transaction|
         transaction.successful?
-    end
-    unsuccessful_invoices = unsuccessful_transactions.map do |transaction|
-      transaction.invoice
-    end
+      end
+    end.flatten
     unsuccessful_invoices.map do |invoice|
       invoice.customer
-    end.uniq
+    end
   end
 end
