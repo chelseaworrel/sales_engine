@@ -67,9 +67,9 @@ class InvoiceRepositoryTest < Minitest::Test
   def test_it_can_find_by_created_at
     invoice_repository = InvoiceRepository.new(nil)
     invoice_repository.load_data("./data/invoices.csv")
-    result = invoice_repository.find_by_created_at("2012-03-06 21:54:10 UTC")
+    result = invoice_repository.find_by_created_at("2012-03-06")
 
-    assert_equal "2012-03-06 21:54:10 UTC", result.created_at
+    assert_equal "2012-03-06", result.created_at
   end
 
   def test_it_can_find_by_updated_at
