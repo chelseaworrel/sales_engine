@@ -107,4 +107,19 @@ class Merchant
       invoice.customer
     end
   end
+
+  def quantity_successful_items
+    merchant_transactions = invoices.map do |invoice|
+      invoice.transactions
+    end.flatten
+    successful_transactions = merchant_transactions.select do |transaction|
+        transaction.successful?
+    end
+    successful_invoices = successful_transactions.map do |transaction|
+      transaction.invoice
+    end
+    successful_invoice_items = successful_invoices.map do |invoice|
+      invoice.items
+    end.flatten.count
+  end
 end
