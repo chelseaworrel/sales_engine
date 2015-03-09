@@ -40,8 +40,8 @@ class Item
         tran.successful?
       end
     end
-     successful_invoice_item.reduce(0) do |sum, inv_item|
-      sum += inv_item.revenue
+    successful_invoice_item.reduce(0) do |sum, inv_item|
+      sum + inv_item.revenue
     end.to_digits
   end
 end

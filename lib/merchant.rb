@@ -71,7 +71,7 @@ class Merchant
       sum += inv_item.revenue
     end
     if !revenue.zero?
-     revenue
+      revenue
    end
   end
 
