@@ -83,4 +83,11 @@ class MerchantTest < Minitest::Test
 
     assert_equal 2, sales_engine.merchant_repository.merchants[33].customers_with_pending_invoices.count
   end
+
+  def test_it_can_find_its_successful_items
+    sales_engine = SalesEngine.new("./data")
+    sales_engine.startup
+
+    assert_equal 219, sales_engine.merchant_repository.merchants[5].quantity_successful_items
+  end
 end

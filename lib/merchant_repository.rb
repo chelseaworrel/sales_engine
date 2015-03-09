@@ -89,15 +89,15 @@ class MerchantRepository
   end
 
   def most_revenue(x)
-    merchants.max_by.first(x) do |merchant|
+    merchants.sort_by do |merchant|
       merchant.revenue
-    end
+    end.reverse.first(x)
   end
 
   def most_items(x)
-    merchants.max_by.first(x) do |merchant|
-      merchant.items.count
-    end
+    merchants.sort_by do |merchant|
+      merchant.quantity_successful_items
+    end.reverse.first(x)
   end
 
   def revenue(date)
