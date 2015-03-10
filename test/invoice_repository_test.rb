@@ -163,12 +163,18 @@ class InvoiceRepositoryTest < Minitest::Test
   end
 
   def test_it_can_create_an_invoice
-    skip
     sales_engine = SalesEngine.new("./data")
     sales_engine.startup
-    new_invopice = sales_engine.invoice_repository.create({customer: invoices[0].customer, merchant: invoices[14].merchant, status: "shipped", items: ["pizza", "pocket"]})
+    sales_engine.invoice_repository.create(customer: sales_engine.invoice_repository.invoices[0].customer, merchant: sales_engine.invoice_repository.invoices[14].merchant, status: "shipped", items: sales_engine.invoice_repository.invoices[0].items)
 
-    assert_equal 4844, new_invoice.id
+    assert_equal 4844, sales_engine.invoice_repository.invoices.last.id
   end
 
+  def test_it_can_create_an_invoice_and_know_invoice_items
+    sales_engine = SalesEngine.new("./data")
+    sales_engine.startup
+    sales_engine.invoice_repository.create(customer: sales_engine.invoice_repository.invoices[0].customer, merchant: sales_engine.invoice_repository.invoices[14].merchant, status: "shipped", items: sales_engine.invoice_repository.invoices[0].items)
+
+    assert_equal 4844, sales_engine.invoice_repository.invoices.last.inspect
+  end
 end
