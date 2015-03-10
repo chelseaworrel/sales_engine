@@ -27,11 +27,34 @@ Module SharedDuties
     end
   end
 
-  # def load_data(path)
-  #   file = CSV.open(path, headers: true, header_converters: :symbol)
-  #   file.map do |line|
-  #     customers << Customer.new(line, self)
-  #   end
-  #   file.close
-  # end
+  def find_by_created_at(created_at, data_type)
+    data_type.detect do |datum|
+      datum.created_at == created_at
+    end
+  end
+
+  def find_by_updated_at(updated_at, data_type)
+    data_type.detect do |datum|
+      datum.updated_at == updated_at
+    end
+  end
+
+
+  def find_all_by_id(id, data_type)
+    data_type.select do |datum|
+      datum.id == id
+    end
+  end
+
+  def find_all_by_created_at(created_at, data_type)
+    data_type.select do |datum|
+      datum.created_at == created_at
+    end
+  end
+
+  def find_all_by_updated_at(updated_at, data_type)
+    data_type.select do |datum|
+      datum.updated_at == updated_at
+    end
+  end
 end
