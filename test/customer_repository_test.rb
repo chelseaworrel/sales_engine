@@ -1,5 +1,6 @@
 require_relative '../test/test_helper'
 require_relative '../lib/customer_repository'
+
 class CustomerRepositoryTest < Minitest::Test
 
   def test_it_starts_with_an_empty_array_of_customers
@@ -21,7 +22,7 @@ class CustomerRepositoryTest < Minitest::Test
     customer_repository = CustomerRepository.new(nil)
     customer_repository.load_data("./data/customers.csv")
 
-    refute customer_repository.customers.empty?
+    assert_equal 1000, customer_repository.customers.count
   end
 
   def test_it_can_return_random_sample
@@ -107,6 +108,7 @@ class CustomerRepositoryTest < Minitest::Test
     customer_repository = CustomerRepository.new(nil)
     customer_repository.load_data("./data/customers.csv")
     result = customer_repository.find_all_by_updated_at("2012-03-27 14:54:17 UTC")
+
     assert_equal 3, result.count
   end
 
@@ -114,8 +116,8 @@ class CustomerRepositoryTest < Minitest::Test
     parent = Minitest::Mock.new
     customer_repository = CustomerRepository.new(parent)
     parent.expect(:find_invoices_by_customer_id, "pizza", [1])
+
     assert_equal "pizza", customer_repository.find_invoices(1)
     parent.verify
   end
-
 end

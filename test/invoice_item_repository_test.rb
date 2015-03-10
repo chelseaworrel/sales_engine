@@ -1,10 +1,12 @@
 require_relative '../test/test_helper'
 require_relative '../lib/invoice_item_repository'
+require 'bigdecimal/util'
 
 class InvoiceItemRepositoryTest < Minitest::Test
 
   def test_it_starts_with_an_empty_array_of_invoice_items
     invoice_item_repository = InvoiceItemRepository.new(nil)
+
     assert_equal [], invoice_item_repository.invoice_items
   end
 
@@ -65,12 +67,11 @@ class InvoiceItemRepositoryTest < Minitest::Test
   end
 
   def test_it_can_find_by_unit_price
-    skip
     invoice_item_repository = InvoiceItemRepository.new(nil)
     invoice_item_repository.load_data("./data/invoice_items.csv")
-    result = invoice_item_repository.find_by_unit_price(23324)
+    result = invoice_item_repository.find_by_unit_price(BigDecimal.new(23324)/100)
 
-    assert_equal 23324, result.unit_price
+    assert_equal "233.24", result.unit_price.to_digits
   end
 
   def test_it_can_find_by_created_at
@@ -122,12 +123,11 @@ class InvoiceItemRepositoryTest < Minitest::Test
   end
 
   def test_it_can_find_all_by_unit_price
-    skip
     invoice_item_repository = InvoiceItemRepository.new(nil)
     invoice_item_repository.load_data("./data/invoice_items.csv")
-    result = invoice_item_repository.find_all_by_unit_price(30949)
+    result = invoice_item_repository.find_all_by_unit_price(BigDecimal.new(72018)/100)
 
-    assert_equal 4, result.count
+    assert_equal 33, result.count
   end
 
   def test_it_can_find_all_by_created_at
@@ -150,6 +150,7 @@ class InvoiceItemRepositoryTest < Minitest::Test
     parent = Minitest::Mock.new
     invoice_item_repository = InvoiceItemRepository.new(parent)
     parent.expect(:find_item_by_id, [1, 2], [1])
+
     assert_equal [1, 2], invoice_item_repository.find_item(1)
     parent.verify
   end
@@ -158,6 +159,7 @@ class InvoiceItemRepositoryTest < Minitest::Test
     parent = Minitest::Mock.new
     invoice_item_repository = InvoiceItemRepository.new(parent)
     parent.expect(:find_invoice_by_id, [1, 2], [1])
+
     assert_equal [1, 2], invoice_item_repository.find_invoice(1)
     parent.verify
   end
@@ -166,6 +168,7 @@ class InvoiceItemRepositoryTest < Minitest::Test
     parent = Minitest::Mock.new
     invoice_item_repository = InvoiceItemRepository.new(parent)
     parent.expect(:find_item_by_id, [1, 2], [1])
+
     assert_equal [1, 2], invoice_item_repository.find_item(1)
     parent.verify
   end

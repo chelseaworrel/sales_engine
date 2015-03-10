@@ -49,6 +49,7 @@ class CustomerTest < Minitest::Test
     parent = Minitest::Mock.new
     customer = Customer.new(data, parent)
     parent.expect(:find_invoices, [1,2], [1])
+
     assert_equal [1,2], customer.invoices
     parent.verify
   end
@@ -66,5 +67,4 @@ class CustomerTest < Minitest::Test
 
     assert_equal "Rutherford, Bogan and Leannon", sales_engine.customer_repository.customers[50].favorite_merchant.name
   end
-
 end

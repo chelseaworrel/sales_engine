@@ -1,7 +1,6 @@
 require 'csv'
 require_relative 'invoice'
 
-
 class InvoiceRepository
   attr_reader :invoices, :sales_engine
 
@@ -30,76 +29,60 @@ class InvoiceRepository
     invoices.sample
   end
 
+  def find_by_attribute(attribute, given)
+    invoices.detect { |invoice| invoice.send(attribute) == given }
+  end
+
+  def find_all_by_attribute(attribute, given)
+    invoices.select { |invoice| invoice.send(attribute) == given }
+  end
+
   def find_by_id(id)
-    invoices.detect do |invoice|
-       invoice.id == id
-    end
+    find_by_attribute(:id, id)
   end
 
   def find_by_customer_id(customer_id)
-    invoices.detect do |invoice|
-       invoice.customer_id == customer_id
-    end
+    find_by_attribute(:customer_id, customer_id)
   end
 
   def find_by_merchant_id(merchant_id)
-    invoices.detect do |invoice|
-       invoice.merchant_id == merchant_id
-    end
+    find_by_attribute(:merchant_id, merchant_id)
   end
 
   def find_by_status(status)
-    invoices.detect do |invoice|
-       invoice.status == status
-    end
+    find_by_attribute(:status, status)
   end
 
   def find_by_created_at(created_at)
-    invoices.detect do |invoice|
-       invoice.created_at == created_at
-    end
+    find_by_attribute(:created_at, created_at)
   end
 
   def find_by_updated_at(updated_at)
-    invoices.detect do |invoice|
-       invoice.updated_at == updated_at
-    end
+    find_by_attribute(:updated_at, updated_at)
   end
 
   def find_all_by_id(id)
-    invoices.select do |invoice|
-      invoice.id == id
-    end
+    find_all_by_attribute(:id, id)
   end
 
   def find_all_by_customer_id(customer_id)
-    invoices.select do |invoice|
-      invoice.customer_id == customer_id
-    end
+    find_all_by_attribute(:customer_id, customer_id)
   end
 
   def find_all_by_merchant_id(merchant_id)
-    invoices.select do |invoice|
-      invoice.merchant_id == merchant_id
-    end
+    find_all_by_attribute(:merchant_id, merchant_id)
   end
 
   def find_all_by_status(status)
-    invoices.select do |invoice|
-      invoice.status == status
-    end
+    find_all_by_attribute(:status, status)
   end
 
   def find_all_by_created_at(created_at)
-    invoices.select do |invoice|
-      invoice.created_at == created_at
-    end
+    find_all_by_attribute(:created_at, created_at)
   end
 
   def find_all_by_updated_at(updated_at)
-    invoices.select do |invoice|
-      invoice.updated_at == updated_at
-    end
+    find_all_by_attribute(:updated_at, updated_at)
   end
 
   def find_transactions(id)

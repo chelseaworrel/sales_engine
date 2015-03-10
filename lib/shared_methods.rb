@@ -1,4 +1,4 @@
-Module SharedDuties
+module SharedDuties
 #Refactor:
 #find the duplicates and only put those methods in a module
 #credit_card.transactions.all
