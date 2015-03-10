@@ -1,6 +1,7 @@
 require 'date'
 
 class Invoice
+  attr_accessor :items
   attr_reader :id,
               :customer_id,
               :merchant_id,

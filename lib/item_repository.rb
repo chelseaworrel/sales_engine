@@ -131,6 +131,6 @@ class ItemRepository
   def most_items(x)
     items.sort_by do |item|
       item.quantity_sold.nil? ? 0 : item.quantity_sold
-    end
+    end.reverse.first(x)
   end
 end

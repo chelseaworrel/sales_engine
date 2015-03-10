@@ -24,14 +24,24 @@ class Customer
   end
 
   def favorite_merchant
-    successful_transactions = transactions.select { |transaction| transaction.successful? }
+    successful_transactions
 
-    successful_invoices = successful_transactions.map { |sv| sv.invoice }
+    successful_invoices = successful_invoices(successful_transactions)
 
-    successful_merchants = successful_invoices.map { |invoice| invoice.merchant }
+    successful_merchants = successful_merchants(successful_invoices)
 
     successful_merchants.max_by { |merchant| successful_merchants.count(merchant) }
-      #figure out if they want count or name
   end
 
+  def successful_transactions
+    transactions.select { |transaction| transaction.successful? }
+  end
+
+  def successful_invoices(transactions)
+    transactions.map { |sv| sv.invoice }
+  end
+
+  def successful_merchants(invoices)
+    invoices.map { |invoice| invoice.merchant }
+  end
 end

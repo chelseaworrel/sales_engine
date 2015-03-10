@@ -171,9 +171,9 @@ class ItemRepositoryTest < Minitest::Test
   def test_it_can_find_most_sold
     sales_engine = SalesEngine.new("./data")
     sales_engine.startup
-    result = sales_engine.item_repository.most_revenue(37)
+    result = sales_engine.item_repository.most_items(5)
 
-    assert_equal "Item Nam Magnam", result[1].name
+    assert_equal "Item Nam Magnam", result.items[1].name
   end
 
 end
