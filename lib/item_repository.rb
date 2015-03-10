@@ -1,7 +1,6 @@
 require 'csv'
 require_relative 'item'
 
-
 class ItemRepository
   attr_reader :items, :sales_engine
 
@@ -30,88 +29,68 @@ class ItemRepository
     items.sample
   end
 
+  def find_by_attribute(attribute, given)
+    items.detect { |item| item.send(attribute) == given }
+  end
+
+  def find_all_by_attribute(attribute, given)
+    items.select { |item| item.send(attribute) == given }
+  end
+
   def find_by_id(id)
-    items.detect do |item|
-       item.id == id
-    end
+    find_by_attribute(:id, id)
   end
 
   def find_by_name(name)
-    items.detect do |item|
-       item.name.downcase == name.downcase
-    end
+    find_by_attribute(:name, name)
   end
 
   def find_by_description(description)
-    items.detect do |item|
-       item.description.downcase == description.downcase
-    end
+    find_by_attribute(:description, description)
   end
 
   def find_by_unit_price(unit_price)
-    items.detect do |item|
-       item.unit_price == unit_price
-    end
+    find_by_attribute(:unit_price, unit_price)
   end
 
   def find_by_merchant_id(merchant_id)
-    items.detect do |item|
-       item.merchant_id == merchant_id
-    end
+    find_by_attribute(:merchant_id, merchant_id)
   end
 
   def find_by_created_at(created_at)
-    items.detect do |item|
-       item.created_at == created_at
-    end
+    find_by_attribute(:created_at, created_at)
   end
 
   def find_by_updated_at(updated_at)
-    items.detect do |item|
-       item.updated_at == updated_at
-    end
+    find_by_attribute(:updated_at, updated_at)
   end
 
   def find_all_by_id(id)
-    items.select do |item|
-      item.id == id
-    end
+    find_all_by_attribute(:id, id)
   end
 
   def find_all_by_name(name)
-    items.select do |item|
-      item.name.downcase == name.downcase
-    end
+    find_all_by_attribute(:name, name)
   end
 
   def find_all_by_description(description)
-    items.select do |item|
-      item.description.downcase == description.downcase
-    end
+    find_all_by_attribute(:description, description)
   end
 
   def find_all_by_unit_price(unit_price)
-    items.select do |item|
-      item.unit_price == unit_price
-    end
+    find_all_by_attribute(:unit_price, unit_price)
   end
 
   def find_all_by_merchant_id(merchant_id)
-    items.select do |item|
-      item.merchant_id == merchant_id
-    end
+    find_all_by_attribute(:merchant_id, merchant_id)
   end
 
   def find_all_by_created_at(created_at)
-    items.select do |item|
-      item.created_at == created_at
-    end
+    find_all_by_attribute(:created_at, created_at)
   end
 
   def find_all_by_updated_at(updated_at)
-    items.select do |item|
-      item.updated_at == updated_at
-    end
+    find_all_by_attribute(:updated_at, updated_at)
   end
 
   def find_invoice_items(id)

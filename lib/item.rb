@@ -35,34 +35,58 @@ class Item
   end
 
   def revenue
-    items_invoices = invoice_items.map do |inv_item|
-       inv_item.nil? ? [] : inv_item.invoice
-    end.uniq
+    items_invoices
 
-    invoices_transactions = items_invoices.map do |invoice|
-      invoice.transactions
-    end.flatten
+    invoices_transactions = invoices_transactions(items_invoices)
 
-    successful_transactions = invoices_transactions.reject do |transaction|
-      !transaction.successful?
-    end
+    successful_transactions = successful_transactions(invoices_transactions)
 
-    successful_invoices = successful_transactions.map do |transaction|
-      transaction.invoice
-    end.flatten
+    successful_invoices = successful_invoices(successful_transactions)
 
-    successful_invoice_items = successful_invoices.map do |invoice|
-      invoice.invoice_items
-    end.flatten
+    successful_invoice_items = successful_invoice_items(successful_invoices)
 
-    final_invoice_items = successful_invoice_items.select do |inv_item|
-      inv_item.item_id == id
-    end
+    final_invoice_items = final_invoice_items(successful_invoice_items)
 
-    final = final_invoice_items.map do |inv_item|
+    invoice_item_revenue = final_invoice_items.map do |inv_item|
       inv_item.revenue
     end
-    final.flatten.reduce(:+)
+    invoice_item_revenue.flatten.reduce(:+)
+  end
+
+  def items_invoices
+    invoice_items.map do |inv_item|
+      inv_item.nil? ? [] : inv_item.invoice
+    end.uniq
+  end
+
+  def invoices_transactions(items_invoices)
+    items_invoices.map do |invoice|
+      invoice.transactions
+    end.flatten
+  end
+
+  def successful_transactions(invoices_transactions)
+    invoices_transactions.reject do |transaction|
+      !transaction.successful?
+    end
+  end
+
+  def successful_invoices(successful_transactions)
+    successful_transactions.map do |transaction|
+      transaction.invoice
+    end.flatten
+  end
+
+  def successful_invoice_items(successful_invoices)
+    successful_invoices.map do |invoice|
+      invoice.invoice_items
+    end.flatten
+  end
+
+  def final_invoice_items(successful_invoice_items)
+    successful_invoice_items.select do |inv_item|
+     inv_item.item_id == id
+    end
   end
 
   def quantity_sold

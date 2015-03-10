@@ -6,6 +6,7 @@ class ItemRepositoryTest < Minitest::Test
 
   def test_it_starts_with_an_empty_array_of_items
     item_repository = ItemRepository.new(nil)
+
     assert_equal [], item_repository.items
   end
 
@@ -173,7 +174,6 @@ class ItemRepositoryTest < Minitest::Test
     sales_engine.startup
     result = sales_engine.item_repository.most_items(5)
 
-    assert_equal "Item Nam Magnam", result.items[1].name
+    assert_equal "Item Nam Magnam", result.first.name
   end
-
 end
