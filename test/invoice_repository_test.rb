@@ -6,6 +6,7 @@ class InvoiceRepositoryTest < Minitest::Test
 
   def test_it_starts_with_an_empty_array_of_invoices
     invoice_repository = InvoiceRepository.new(nil)
+
     assert_equal [], invoice_repository.invoices
   end
 
@@ -66,12 +67,11 @@ class InvoiceRepositoryTest < Minitest::Test
   end
 
   def test_it_can_find_by_created_at
-    skip
     invoice_repository = InvoiceRepository.new(nil)
     invoice_repository.load_data("./data/invoices.csv")
-    result = invoice_repository.find_by_created_at("2012-03-06")
+    result = invoice_repository.find_by_created_at(Date.parse("2012-03-25 09:54:09 UTC"))
 
-    assert_equal "2012-03-06", result
+    assert_equal 1, result.id
   end
 
   def test_it_can_find_by_updated_at
@@ -134,6 +134,7 @@ class InvoiceRepositoryTest < Minitest::Test
     parent = Minitest::Mock.new
     invoice_repository = InvoiceRepository.new(parent)
     parent.expect(:find_invoice_items_by_invoice_id, [1, 2], [1])
+
     assert_equal [1, 2], invoice_repository.find_invoice_items(1)
     parent.verify
   end
@@ -142,6 +143,7 @@ class InvoiceRepositoryTest < Minitest::Test
     parent = Minitest::Mock.new
     invoice_repository = InvoiceRepository.new(parent)
     parent.expect(:find_transactions_by_invoice_id, "pizza", [1])
+
     assert_equal "pizza", invoice_repository.find_transactions(1)
     parent.verify
   end
@@ -150,6 +152,7 @@ class InvoiceRepositoryTest < Minitest::Test
     parent = Minitest::Mock.new
     invoice_repository = InvoiceRepository.new(parent)
     parent.expect(:find_invoice_items_by_invoice_id, "pizza", [1])
+
     assert_equal "pizza", invoice_repository.find_invoice_items(1)
     parent.verify
   end
@@ -158,7 +161,17 @@ class InvoiceRepositoryTest < Minitest::Test
     parent = Minitest::Mock.new
     invoice_repository = InvoiceRepository.new(parent)
     parent.expect(:find_merchant_by_id, "pizza", [1])
+
     assert_equal "pizza", invoice_repository.find_merchant(1)
+    parent.verify
+  end
+
+  def test_it_can_talk_to_the_parent_with_new_charge
+    parent = Minitest::Mock.new
+    invoice_repository = InvoiceRepository.new(parent)
+    parent.expect(:new_charge_with_invoice_id, "pizza", [1, 2])
+
+    assert_equal "pizza", invoice_repository.new_charge(1, 2)
     parent.verify
   end
 
@@ -168,13 +181,5 @@ class InvoiceRepositoryTest < Minitest::Test
     sales_engine.invoice_repository.create(customer: sales_engine.invoice_repository.invoices[0].customer, merchant: sales_engine.invoice_repository.invoices[14].merchant, status: "shipped", items: sales_engine.invoice_repository.invoices[0].items)
 
     assert_equal 4844, sales_engine.invoice_repository.invoices.last.id
-  end
-
-  def test_it_can_create_an_invoice_and_know_invoice_items
-    sales_engine = SalesEngine.new("./data")
-    sales_engine.startup
-    sales_engine.invoice_repository.create(customer: sales_engine.invoice_repository.invoices[0].customer, merchant: sales_engine.invoice_repository.invoices[14].merchant, status: "shipped", items: sales_engine.invoice_repository.invoices[0].items)
-
-    assert_equal 4844, sales_engine.invoice_repository.invoices.last.inspect
   end
 end

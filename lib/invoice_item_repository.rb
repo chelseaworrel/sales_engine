@@ -1,7 +1,6 @@
 require 'csv'
 require_relative 'invoice_item'
 
-
 class InvoiceItemRepository
   attr_reader :invoice_items, :sales_engine
 
@@ -30,88 +29,68 @@ class InvoiceItemRepository
     invoice_items.sample
   end
 
+  def find_by_attribute(attribute, given)
+    invoice_items.detect { |invoice_item| invoice_item.send(attribute) == given }
+  end
+
+  def find_all_by_attribute(attribute, given)
+    invoice_items.select { |invoice_item| invoice_item.send(attribute) == given }
+  end
+
   def find_by_id(id)
-    invoice_items.detect do |invoice_item|
-       invoice_item.id == id
-    end
+    find_by_attribute(:id, id)
   end
 
   def find_by_item_id(item_id)
-    invoice_items.detect do |invoice_item|
-       invoice_item.item_id == item_id
-    end
+    find_by_attribute(:item_id, item_id)
   end
 
   def find_by_invoice_id(invoice_id)
-    invoice_items.detect do |invoice_item|
-       invoice_item.invoice_id == invoice_id
-    end
+    find_by_attribute(:invoice_id, invoice_id)
   end
 
   def find_by_quantity(quantity)
-    invoice_items.detect do |invoice_item|
-       invoice_item.quantity == quantity
-    end
+    find_by_attribute(:quantity, quantity)
   end
 
   def find_by_unit_price(unit_price)
-    invoice_items.detect do |invoice_item|
-       invoice_item.unit_price == unit_price
-    end
+    find_by_attribute(:unit_price, unit_price)
   end
 
   def find_by_created_at(created_at)
-    invoice_items.detect do |invoice_item|
-       invoice_item.created_at == created_at
-    end
+    find_by_attribute(:created_at, created_at)
   end
 
   def find_by_updated_at(updated_at)
-    invoice_items.detect do |invoice_item|
-       invoice_item.updated_at == updated_at
-    end
+    find_by_attribute(:updated_at, updated_at)
   end
 
   def find_all_by_id(id)
-    invoice_items.select do |invoice_item|
-      invoice_item.id == id
-    end
+    find_all_by_attribute(:id, id)
   end
 
   def find_all_by_item_id(item_id)
-    invoice_items.select do |invoice_item|
-       invoice_item.item_id == item_id
-    end
+    find_all_by_attribute(:item_id, item_id)
   end
 
   def find_all_by_invoice_id(invoice_id)
-    invoice_items.select do |invoice_item|
-      invoice_item.invoice_id == invoice_id
-    end
+    find_all_by_attribute(:invoice_id, invoice_id)
   end
 
   def find_all_by_quantity(quantity)
-    invoice_items.select do |invoice_item|
-      invoice_item.quantity == quantity
-    end
+    find_all_by_attribute(:quantity, quantity)
   end
 
   def find_all_by_unit_price(unit_price)
-    invoice_items.select do |invoice_item|
-      invoice_item.unit_price == unit_price
-    end
+    find_all_by_attribute(:unit_price, unit_price)
   end
 
   def find_all_by_created_at(created_at)
-    invoice_items.select do |invoice_item|
-      invoice_item.created_at == created_at
-    end
+    find_all_by_attribute(:created_at, created_at)
   end
 
   def find_all_by_updated_at(updated_at)
-    invoice_items.select do |invoice_item|
-      invoice_item.updated_at == updated_at
-    end
+    find_all_by_attribute(:updated_at, updated_at)
   end
 
   def find_invoice(id)
@@ -130,6 +109,7 @@ class InvoiceItemRepository
       quantity = grouped_items.map do |item|
         item.count
       end.uniq.flatten.join
+
       line = {
         id:         "#{invoice_items.last.id + 1}",
         item_id:    item.id,

@@ -1,7 +1,6 @@
 require 'csv'
 require_relative 'customer'
 
-
 class CustomerRepository
   attr_reader :customers, :sales_engine
 
@@ -30,10 +29,16 @@ class CustomerRepository
     customers.sample
   end
 
+  def find_by_attribute(attribute, given)
+    customers.detect { |customer| customer.send(attribute) == given }
+  end
+
+  def find_all_by_attribute(attribute, given)
+    customers.select { |customer| customer.send(attribute) == given }
+  end
+
   def find_by_id(id)
-    customers.detect do |customer|
-       customer.id == id
-    end
+    find_by_attribute(:id, id)
   end
 
   def find_by_first_name(first_name)
@@ -49,21 +54,15 @@ class CustomerRepository
   end
 
   def find_by_created_at(created_at)
-    customers.detect do |customer|
-       customer.created_at == created_at
-    end
+    find_by_attribute(:created_at, created_at)
   end
 
   def find_by_updated_at(updated_at)
-    customers.detect do |customer|
-       customer.updated_at == updated_at
-    end
+    find_by_attribute(:updated_at, updated_at)
   end
 
   def find_all_by_id(id)
-    customers.select do |customer|
-      customer.id == id
-    end
+    find_all_by_attribute(:id, id)
   end
 
   def find_all_by_first_name(first_name)
@@ -79,22 +78,14 @@ class CustomerRepository
   end
 
   def find_all_by_created_at(created_at)
-    customers.select do |customer|
-      customer.created_at == created_at
-    end
+    find_all_by_attribute(:created_at, created_at)
   end
 
   def find_all_by_updated_at(updated_at)
-    customers.select do |customer|
-      customer.updated_at == updated_at
-    end
+    find_all_by_attribute(:updated_at, updated_at)
   end
 
   def find_invoices(id)
     sales_engine.find_invoices_by_customer_id(id)
-  end
-
-  def find_transactions(id)
-    sales_engine.find_transactions_with_customer_id(id)
   end
 end
