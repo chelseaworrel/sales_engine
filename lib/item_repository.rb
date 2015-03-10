@@ -124,9 +124,13 @@ class ItemRepository
 
   def most_revenue(x)
     items.sort_by do |item|
-      item.invoice_items.each do |inv_item|
-        inv_item.revenue
-      end.flatten
+      item.revenue.nil? ? 0 : item.revenue
+    end.reverse.first(x)
+  end
+
+  def most_items(x)
+    items.sort_by do |item|
+      item.quantity_sold.nil? ? 0 : item.quantity_sold
     end
   end
 end

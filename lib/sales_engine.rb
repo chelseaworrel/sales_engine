@@ -77,6 +77,10 @@ class SalesEngine
     customer_repository.find_by_id(id)
   end
 
+  def new_charge_with_invoice_id(card_info, id)
+    transaction_repository.create_new_charge(card_info, id)
+  end
+
 end
 
 if __FILE__ == $0
@@ -85,12 +89,3 @@ if __FILE__ == $0
   engine.startup
 
 end
-
-
-#puts sales_engine.transaction_repository.transactions
-
-# sales_engine = SalesEngine.new
-#
-# sales_engine.startup.inspect
-#
-# puts sales_engine.customer_repository.customers
