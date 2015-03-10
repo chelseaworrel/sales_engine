@@ -122,7 +122,7 @@ class InvoiceRepository
     line = {
       id:          "#{invoices.last.id + 1}",
       customer_id: inputs[:customer].id,
-      merchant_id:    inputs[:merchant].id,
+      merchant_id: inputs[:merchant].id,
       status:      inputs[:status],
       created_at:  "#{Date.new}",
       updated_at:  "#{Date.new}",

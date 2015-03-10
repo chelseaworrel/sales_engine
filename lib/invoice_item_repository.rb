@@ -131,17 +131,16 @@ class InvoiceItemRepository
         item.count
       end.uniq.flatten.join
       line = {
-        id:  "#{invoice_items.last.id + 1}",
-        item_id: item.id,
+        id:         "#{invoice_items.last.id + 1}",
+        item_id:    item.id,
         invoice_id: id,
-        quantity: quantity,
+        quantity:   quantity,
         unit_price: item.unit_price,
         created_at: "#{Date.new}",
         updated_at: "#{Date.new}"
-
-      }
+              }
      new_invoice_item = InvoiceItem.new(line, self)
      invoice_items << new_invoice_item
-   end
+    end
   end
 end
