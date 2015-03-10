@@ -54,14 +54,14 @@ class CustomerTest < Minitest::Test
   end
 
   def test_it_can_get_its_transactions
-    sales_engine = SalesEngine.new
+    sales_engine = SalesEngine.new("./data")
     sales_engine.startup
 
     assert_equal 7, sales_engine.customer_repository.customers[0].transactions.size
   end
 
   def test_it_can_get_its_favorite_merchant
-    sales_engine = SalesEngine.new
+    sales_engine = SalesEngine.new("./data")
     sales_engine.startup
 
     assert_equal "Rutherford, Bogan and Leannon", sales_engine.customer_repository.customers[50].favorite_merchant.name

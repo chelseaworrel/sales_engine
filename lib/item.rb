@@ -35,13 +35,63 @@ class Item
   end
 
   def revenue
-    successful_invoice_item = invoice_items.select do |inv_item|
-      inv_item.invoice.transactions.each do |tran|
-        tran.successful?
-      end
+    items_invoices = invoice_items.map do |inv_item|
+       inv_item.nil? ? [] : inv_item.invoice
+    end.uniq
+
+    invoices_transactions = items_invoices.map do |invoice|
+      invoice.transactions
+    end.flatten
+
+    successful_transactions = invoices_transactions.reject do |transaction|
+      !transaction.successful?
     end
-    successful_invoice_item.reduce(0) do |sum, inv_item|
-      sum + inv_item.revenue
-    end.to_digits
+
+    successful_invoices = successful_transactions.map do |transaction|
+      transaction.invoice
+    end.flatten
+
+    successful_invoice_items = successful_invoices.map do |invoice|
+      invoice.invoice_items
+    end.flatten
+
+    final_invoice_items = successful_invoice_items.select do |inv_item|
+      inv_item.item_id == id
+    end
+
+    final = final_invoice_items.map do |inv_item|
+      inv_item.revenue
+    end
+    final.flatten.reduce(:+)
+  end
+
+  def quantity_sold
+    items_invoices = invoice_items.map do |inv_item|
+      inv_item.invoice
+    end.uniq
+
+    invoices_transactions = items_invoices.map do |invoice|
+      invoice.transactions
+    end.flatten
+
+    successful_transactions = invoices_transactions.reject do |transaction|
+      !transaction.successful?
+    end
+
+    successful_invoices = successful_transactions.map do |transaction|
+      transaction.invoice
+    end.flatten
+
+    successful_invoice_items = successful_invoices.map do |invoice|
+      invoice.invoice_items
+    end.flatten.flatten
+
+    final_invoice_items = successful_invoice_items.select do |inv_item|
+      inv_item.item_id == id
+    end
+
+    final_invoice_items.flatten.map do |inv_item|
+      inv_item.quantity
+    end.inject(:+)
   end
 end

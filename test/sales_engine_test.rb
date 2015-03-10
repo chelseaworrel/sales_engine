@@ -50,7 +50,7 @@ class SalesEngineTest < Minitest::Test
   end
 
   def test_it_can_load_items_data_at_startup
-    sales_engine.item_repository.load_data("/customer.csv")
+    sales_engine.item_repository.load_data("./data/items.csv")
 
     assert_equal "Item Qui Esse", sales_engine.item_repository.items.first.name
   end
@@ -64,7 +64,7 @@ class SalesEngineTest < Minitest::Test
   def test_it_can_load_transactions_data_at_startup
     sales_engine.transaction_repository.load_data("./data/transactions.csv")
 
-    assert_equal 4654405418249632, sales_engine.transaction_repository.transactions.first.credit_card_number
+    assert_equal "4654405418249632", sales_engine.transaction_repository.transactions.first.credit_card_number
   end
 
   def test_it_can_find_items_by_merchant_id

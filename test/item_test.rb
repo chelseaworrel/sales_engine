@@ -87,6 +87,13 @@ class ItemTest < Minitest::Test
     sales_engine = SalesEngine.new("./data")
     sales_engine.startup
 
-    assert_equal "35208.09", sales_engine.item_repository.items[2].revenue
+    assert_equal "29393.91", sales_engine.item_repository.items[2].revenue.to_digits
+  end
+
+  def test_it_can_find_how_many_sold
+    sales_engine = SalesEngine.new("./data")
+    sales_engine.startup
+
+    assert_equal 91, sales_engine.item_repository.items[2].quantity_sold
   end
 end

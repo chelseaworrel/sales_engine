@@ -15,7 +15,7 @@ class ItemRepositoryTest < Minitest::Test
 
     assert_equal "Item Qui Esse", item_repository.items.first.name
     assert_equal 1, item_repository.items.first.id
-    assert_equal 68723, item_repository.items[4].unit_price
+    assert_equal "687.23", item_repository.items[4].unit_price.to_digits
   end
 
   def test_it_can_return_all_items
@@ -57,12 +57,11 @@ class ItemRepositoryTest < Minitest::Test
   end
 
   def test_it_can_find_by_unit_price
-    skip
     item_repository = ItemRepository.new(nil)
     item_repository.load_data("./data/items.csv")
     result = item_repository.find_by_unit_price(398.62)
 
-    assert_equal 398.62, result.unit_price
+    assert_equal "398.62", result.unit_price.to_digits
   end
 
   def test_it_can_find_by_merchant_id
@@ -114,12 +113,11 @@ class ItemRepositoryTest < Minitest::Test
   end
 
   def test_it_can_find_all_by_unit_price
-    skip
     item_repository = ItemRepository.new(nil)
     item_repository.load_data("./data/items.csv")
     result = item_repository.find_all_by_unit_price(42.91)
 
-    assert_equal 4, result.count
+    assert_equal 1, result.count
   end
 
   def test_it_can_find_all_by_merchant_id
@@ -163,11 +161,19 @@ class ItemRepositoryTest < Minitest::Test
   end
 
   def test_it_can_find_most_revenues
-    sales_engine = SalesEngine.new
+    sales_engine = SalesEngine.new("./data")
     sales_engine.startup
     result = sales_engine.item_repository.most_revenue(3)
 
-    assert_equal 3, result
+    assert_equal "Item Dicta Autem", result.first.name
+  end
+
+  def test_it_can_find_most_sold
+    sales_engine = SalesEngine.new("./data")
+    sales_engine.startup
+    result = sales_engine.item_repository.most_revenue(37)
+
+    assert_equal "Item Nam Magnam", result[1].name
   end
 
 end
