@@ -91,7 +91,6 @@ class ItemTest < Minitest::Test
   end
 
   def test_it_can_find_how_many_sold
-    skip
     sales_engine = SalesEngine.new("./data")
     sales_engine.startup
 

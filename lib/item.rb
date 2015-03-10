@@ -50,7 +50,7 @@ class Item
     invoice_item_revenue = final_invoice_items.map do |inv_item|
       inv_item.revenue
     end
-    invoice_item_revenue.flatten.reduce(:+)
+    invoice_item_revenue.reduce(:+)
   end
 
   def items_invoices
@@ -74,7 +74,7 @@ class Item
   def successful_invoices(successful_transactions)
     successful_transactions.map do |transaction|
       transaction.invoice
-    end.flatten
+    end
   end
 
   def successful_invoice_items(successful_invoices)
@@ -90,32 +90,20 @@ class Item
   end
 
   def quantity_sold
-    items_invoices = invoice_items.map do |inv_item|
-      inv_item.invoice
-    end.uniq
+    items_invoices
 
-    invoices_transactions = items_invoices.map do |invoice|
-      invoice.transactions
-    end.flatten
+    invoices_transactions = invoices_transactions(items_invoices)
 
-    successful_transactions = invoices_transactions.reject do |transaction|
-      !transaction.successful?
-    end
+    successful_transactions = successful_transactions(invoices_transactions)
 
-    successful_invoices = successful_transactions.map do |transaction|
-      transaction.invoice
-    end.flatten
+    successful_invoices = successful_invoices(successful_transactions)
 
-    successful_invoice_items = successful_invoices.map do |invoice|
-      invoice.invoice_items
-    end.flatten.flatten
+    successful_invoice_items = successful_invoice_items(successful_invoices)
 
-    final_invoice_items = successful_invoice_items.select do |inv_item|
-      inv_item.item_id == id
-    end
+    final_invoice_items = final_invoice_items(successful_invoice_items)
 
     final_invoice_items.flatten.map do |inv_item|
       inv_item.quantity
-    end.inject(:+)
+    end.reduce(:+)
   end
 end
