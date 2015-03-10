@@ -128,13 +128,13 @@ class TransactionRepository
     card_info = {
       id:                     "#{transactions.last.id + 1}",
       invoice_id:             id,
-      credit_card_number:     inputs[:credit_card_number],
-      credit_card_expiration: inputs[:credit_card_expiration],
-      result:                 inputs[:result],
+      credit_card_number:     card_info[:credit_card_number],
+      credit_card_expiration: card_info[:credit_card_expiration],
+      result:                 card_info[:result],
       created_at:             "#{Date.new}",
       updated_at:             "#{Date.new}"
       }
-      
+
       new_transaction = Transaction.new(card_info, self)
       transactions << new_transaction
   end
