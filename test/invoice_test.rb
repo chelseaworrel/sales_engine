@@ -79,7 +79,7 @@ class InvoiceTest < Minitest::Test
   end
 
   def test_it_can_get_its_items
-    sales_engine = SalesEngine.new
+    sales_engine = SalesEngine.new("./data")
     sales_engine.startup
 
     assert_equal 8, sales_engine.invoice_repository.invoices[0].items.size
