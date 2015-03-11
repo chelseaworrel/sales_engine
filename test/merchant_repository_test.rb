@@ -133,7 +133,7 @@ class MerchantRepositoryTest < Minitest::Test
     sales_engine.startup
     result = sales_engine.merchant_repository.most_items(1)
 
-     assert_equal "Balistreri, Schaefer and Kshlerin", result.first.name
+    assert_equal "Balistreri, Schaefer and Kshlerin", result.first.name
   end
 
   def test_it_can_find_total_revenue_by_date

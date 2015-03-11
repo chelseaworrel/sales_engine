@@ -149,6 +149,7 @@ class ItemRepositoryTest < Minitest::Test
     parent = Minitest::Mock.new
     item_repository = ItemRepository.new(parent)
     parent.expect(:find_invoice_items_by_item_id, [1, 2], [1])
+    
     assert_equal [1, 2], item_repository.find_invoice_items(1)
     parent.verify
   end
@@ -157,6 +158,7 @@ class ItemRepositoryTest < Minitest::Test
     parent = Minitest::Mock.new
     item_repository = ItemRepository.new(parent)
     parent.expect(:find_merchant_by_id, "pizza", [1])
+
     assert_equal "pizza", item_repository.find_merchant(1)
     parent.verify
   end

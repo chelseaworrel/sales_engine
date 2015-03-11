@@ -10,7 +10,6 @@ class TransactionRepositoryTest < Minitest::Test
     assert_equal [], transaction_repository.transactions
   end
 
-
   def test_it_can_load_data_to_transaction
     transaction_repository = TransactionRepository.new(nil)
     transaction_repository.load_data("./data/transactions.csv")
@@ -130,12 +129,11 @@ class TransactionRepositoryTest < Minitest::Test
     assert_equal 20, result.count
   end
 
-
   def test_it_can_talk_to_the_repository_with_invoice
     parent = Minitest::Mock.new
     transaction_repository = TransactionRepository.new(parent)
     parent.expect(:find_invoice_by_id, "pizza", [1])
-    
+
     assert_equal "pizza", transaction_repository.find_invoice(1)
     parent.verify
   end
