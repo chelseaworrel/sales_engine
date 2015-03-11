@@ -29,14 +29,6 @@ class InvoiceRepository
     invoices.sample
   end
 
-  def find_by_attribute(attribute, given)
-    invoices.detect { |invoice| invoice.send(attribute) == given }
-  end
-
-  def find_all_by_attribute(attribute, given)
-    invoices.select { |invoice| invoice.send(attribute) == given }
-  end
-
   def find_by_id(id)
     find_by_attribute(:id, id)
   end
@@ -111,15 +103,25 @@ class InvoiceRepository
       updated_at:  "#{Date.new}",
             }
 
-    new_invoice = Invoice.new(line, self)
-    invoices << new_invoice
+    new_inv = Invoice.new(line, self)
+    invoices << new_inv
 
-    sales_engine.create_new_items_with_invoice_id(inputs[:items], new_invoice.id)
-    new_invoice
+    sales_engine.create_new_items_with_invoice_id(inputs[:items], new_inv.id)
+    new_inv
 
   end
 
   def new_charge(card_info, id)
     sales_engine.new_charge_with_invoice_id(card_info, id)
+  end
+
+  private
+
+  def find_by_attribute(attribute, given)
+    invoices.detect { |invoice| invoice.send(attribute) == given }
+  end
+
+  def find_all_by_attribute(attribute, given)
+    invoices.select { |invoice| invoice.send(attribute) == given }
   end
 end

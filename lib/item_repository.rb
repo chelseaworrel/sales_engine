@@ -29,14 +29,6 @@ class ItemRepository
     items.sample
   end
 
-  def find_by_attribute(attribute, given)
-    items.detect { |item| item.send(attribute) == given }
-  end
-
-  def find_all_by_attribute(attribute, given)
-    items.select { |item| item.send(attribute) == given }
-  end
-
   def find_by_id(id)
     find_by_attribute(:id, id)
   end
@@ -111,5 +103,15 @@ class ItemRepository
     items.sort_by do |item|
       item.quantity_sold.nil? ? 0 : item.quantity_sold
     end.reverse.first(x)
+  end
+
+  private
+
+  def find_by_attribute(attribute, given)
+    items.detect { |item| item.send(attribute) == given }
+  end
+
+  def find_all_by_attribute(attribute, given)
+    items.select { |item| item.send(attribute) == given }
   end
 end

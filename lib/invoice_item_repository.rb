@@ -29,14 +29,6 @@ class InvoiceItemRepository
     invoice_items.sample
   end
 
-  def find_by_attribute(attribute, given)
-    invoice_items.detect { |invoice_item| invoice_item.send(attribute) == given }
-  end
-
-  def find_all_by_attribute(attribute, given)
-    invoice_items.select { |invoice_item| invoice_item.send(attribute) == given }
-  end
-
   def find_by_id(id)
     find_by_attribute(:id, id)
   end
@@ -121,6 +113,20 @@ class InvoiceItemRepository
               }
      new_invoice_item = InvoiceItem.new(line, self)
      invoice_items << new_invoice_item
+    end
+  end
+
+  private
+
+  def find_by_attribute(attribute, given)
+    invoice_items.detect do |invoice_item|
+      invoice_item.send(attribute) == given
+    end
+  end
+
+  def find_all_by_attribute(attribute, given)
+    invoice_items.select do |invoice_item|
+      invoice_item.send(attribute) == given
     end
   end
 end

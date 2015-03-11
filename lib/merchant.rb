@@ -2,7 +2,6 @@ require 'bigdecimal'
 require 'bigdecimal/util'
 require 'date'
 
-
 class Merchant
   attr_reader :id,
               :name,
@@ -26,37 +25,17 @@ class Merchant
     repository.find_invoices(id)
   end
 
-  # def revenue
-  #   merchant_transactions = invoices.map do |invoice|
-  #     invoice.transactions
-  #   end.flatten
-  #   successful_transactions = merchant_transactions.select do |transaction|
-  #       transaction.successful?
-  #   end
-  #   successful_invoices = successful_transactions.map do |transaction|
-  #     transaction.invoice
-  #   end
-  #   revenue = successful_invoices.map do |invoice|
-  #     invoice.invoice_items.reduce(0) do |sum, inv_item|
-  #       sum += inv_item.revenue
-  #     end
-  #   end.inject(:+)
-  #   revenue.to_digits
-  # end
-
   def revenue(date=nil)
     if !date.nil?
       date = parse_date(date.to_s)
     end
-    merchant_transactions = invoices.map do |invoice|
-      invoice.transactions
-    end.flatten
-    successful_transactions = merchant_transactions.select do |transaction|
-        transaction.successful?
-    end
-    successful_invoices = successful_transactions.map do |transaction|
-      transaction.invoice
-    end
+
+    merchant_transactions
+
+    successful_transactions = successful_transactions(merchant_transactions)
+
+    successful_invoices = successful_invoices(successful_transactions)
+
     if date.nil?
       parsed_successful_invoices = successful_invoices
     else
@@ -72,23 +51,60 @@ class Merchant
     end
     if !revenue.zero?
       revenue
-   end
+    end
   end
+
+  def merchant_transactions
+    @merchant_transactions ||= invoices.map do |invoice|
+      invoice.transactions
+    end.flatten
+  end
+
+  def successful_transactions(merchant_trans)
+    @successful_transactions ||= merchant_trans.select do |transaction|
+      transaction.successful?
+    end
+  end
+
+  def successful_invoices(good_transactions)
+    @successful_invoices ||= good_transactions.map do |transaction|
+      transaction.invoice
+    end
+  end
+
+  def successful_invoice_items(good_invoices)
+    @successful_invoice_items ||= good_invoices.map do |invoice|
+      invoice.invoice_items
+    end.flatten
+  end
+
+  def parsed_good_invoice_items(parsed_successful_invoices)
+    @parsed_good_invoice_items ||= parsed_successful_invoices.map do |invoice|
+      invoice.invoice_items
+    end.flatten
+  end
+  #
+  # def check_for_date(date)
+  #   if date.nil?
+  #     @successful_invoices
+  #   else
+  #     @successful_invoices.select do |invoice|
+  #       invoice.created_at == date
+  #     end
+  #   end
+  # end
 
   def parse_date(date)
     Date.parse(date)
   end
 
   def favorite_customer
-    merchant_transactions = invoices.map do |invoice|
-      invoice.transactions
-    end.flatten
-    successful_transactions = merchant_transactions.select do |transaction|
-        transaction.successful?
-    end
-    successful_invoices = successful_transactions.map do |transaction|
-      transaction.invoice
-    end.flatten
+    merchant_transactions
+
+    successful_transactions = successful_transactions(merchant_transactions)
+
+    successful_invoices = successful_invoices(successful_transactions)
+
     merchant_customers = successful_invoices.map do |invoice|
       invoice.customer
     end
@@ -98,26 +114,28 @@ class Merchant
   end
 
   def customers_with_pending_invoices
-    unsuccessful_invoices = invoices.reject do |invoice|
-      invoice.transactions.any? do |transaction|
-        transaction.successful?
-      end
-    end.flatten
+    unsuccessful_invoices
+
     unsuccessful_invoices.map do |invoice|
       invoice.customer
     end
   end
 
-  def quantity_successful_items
-    merchant_transactions = invoices.map do |invoice|
-      invoice.transactions
-    end.flatten
-    successful_transactions = merchant_transactions.select do |transaction|
+  def unsuccessful_invoices
+    invoices.reject do |invoice|
+      invoice.transactions.any? do |transaction|
         transaction.successful?
-    end
-    successful_invoices = successful_transactions.map do |transaction|
-      transaction.invoice
-    end
+      end
+    end.flatten
+  end
+
+  def quantity_successful_items
+    merchant_transactions
+
+    successful_transactions = successful_transactions(merchant_transactions)
+
+    successful_invoices = successful_invoices(successful_transactions)
+
     successful_invoice_items = successful_invoices.map do |invoice|
       invoice.items
     end.flatten.count

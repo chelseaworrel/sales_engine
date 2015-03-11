@@ -1,7 +1,6 @@
 require 'csv'
 require_relative 'transaction'
 
-
 class TransactionRepository
   attr_reader :transactions, :sales_engine
 
@@ -37,87 +36,59 @@ class TransactionRepository
   end
 
   def find_by_id(id)
-    transactions.detect do |transaction|
-       transaction.id == id
-    end
+    find_by_attribute(:id, id)
   end
 
   def find_by_invoice_id(invoice_id)
-    transactions.detect do |transaction|
-       transaction.invoice_id == invoice_id
-    end
+    find_by_attribute(:invoice_id, invoice_id)
   end
 
   def find_by_credit_card_number(credit_card_number)
-    transactions.detect do |transaction|
-       transaction.credit_card_number == credit_card_number
-    end
+    find_by_attribute(:credit_card_number, credit_card_number)
   end
 
   def find_by_credit_card_expiration_date(credit_card_expiration_date)
-    transactions.detect do |transaction|
-       transaction.credit_card_expiration_date == credit_card_expiration_date
-    end
+    find_by_attribute(:credit_card_expiration_date, credit_card_expiration_date)
   end
 
   def find_by_result(result)
-    transactions.detect do |transaction|
-       transaction.result == result
-    end
+    find_by_attribute(:result, result)
   end
 
   def find_by_created_at(created_at)
-    transactions.detect do |transaction|
-       transaction.created_at == created_at
-    end
+    find_by_attribute(:created_at, created_at)
   end
 
   def find_by_updated_at(updated_at)
-    transactions.detect do |transaction|
-       transaction.updated_at == updated_at
-    end
+    find_by_attribute(:updated_at, updated_at)
   end
 
   def find_all_by_id(id)
-    transactions.select do |transaction|
-      transaction.id == id
-    end
+    find_all_by_attribute(:id, id)
   end
 
   def find_all_by_invoice_id(invoice_id)
-    transactions.select do |transaction|
-      transaction.invoice_id == invoice_id
-    end
+    find_all_by_attribute(:invoice_id, invoice_id)
   end
 
   def find_all_by_credit_card_number(credit_card_number)
-    transactions.select do |transaction|
-      transaction.credit_card_number == credit_card_number
-    end
+    find_all_by_attribute(:credit_card_number, credit_card_number)
   end
 
-  def find_all_by_credit_card_expiration_date(credit_card_expiration_date)
-    transactions.select do |transaction|
-      transaction.credit_card_expiration_date == credit_card_expiration_date
-    end
+  def find_all_by_credit_card_expiration_date(ex_date)
+    find_all_by_attribute(:credit_card_expiration_date, ex_date)
   end
 
   def find_all_by_result(result)
-    transactions.select do |transaction|
-      transaction.result == result
-    end
+    find_all_by_attribute(:result, result)
   end
 
   def find_all_by_created_at(created_at)
-    transactions.select do |transaction|
-      transaction.created_at == created_at
-    end
+    find_all_by_attribute(:created_at, created_at)
   end
 
   def find_all_by_updated_at(updated_at)
-    transactions.select do |transaction|
-      transaction.updated_at == updated_at
-    end
+    find_all_by_attribute(:updated_at, updated_at)
   end
 
   def find_invoice(id)
@@ -138,18 +109,14 @@ class TransactionRepository
       new_transaction = Transaction.new(card_info, self)
       transactions << new_transaction
   end
-end
 
-#Refactor:
-#find the duplicates and only put those methods in a module
-#credit_card.transactions.all
-# require 'the file location'
-# Class the class you are using
-# include WhateverTheHeckWeWant
-# module WhateverTheHeckWeWant
-#   nothing but methods in the module
-# # def find_by_id(id, data_type)
-#   data_type.find do |datum|
-#      datum.id == id
-#   end
-# end
+  private
+
+  def find_by_attribute(attribute, given)
+    transactions.detect { |transaction| transaction.send(attribute) == given }
+  end
+
+  def find_all_by_attribute(attribute, given)
+    transactions.select { |transaction| transaction.send(attribute) == given }
+  end
+end

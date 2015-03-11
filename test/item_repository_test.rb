@@ -174,6 +174,6 @@ class ItemRepositoryTest < Minitest::Test
     sales_engine.startup
     result = sales_engine.item_repository.most_items(5)
 
-    assert_equal "Item Nam Magnam", result.first.name
+    assert_equal "Item Dicta Autem", result.first.name
   end
 end

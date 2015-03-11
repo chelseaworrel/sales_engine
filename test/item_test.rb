@@ -64,6 +64,7 @@ class ItemTest < Minitest::Test
     parent = Minitest::Mock.new
     item = Item.new(data, parent)
     parent.expect(:find_invoice_items, [1, 2], [1])
+    
     assert_equal [1, 2], item.invoice_items
     parent.verify
   end
@@ -72,6 +73,7 @@ class ItemTest < Minitest::Test
     parent = Minitest::Mock.new
     item = Item.new(data, parent)
     parent.expect(:find_merchant, "pizza", [1])
+
     assert_equal "pizza", item.merchant
     parent.verify
   end

@@ -3,7 +3,6 @@ require 'bigdecimal'
 require 'bigdecimal/util'
 require_relative 'merchant'
 
-
 class MerchantRepository
   attr_reader :merchants, :sales_engine
 
@@ -33,51 +32,35 @@ class MerchantRepository
   end
 
   def find_by_id(id)
-    merchants.detect do |merchant|
-       merchant.id == id
-    end
+    find_by_attribute(:id, id)
   end
 
   def find_by_name(name)
-    merchants.detect do |merchant|
-       merchant.name.downcase == name.downcase
-    end
+    find_by_attribute(:name, name)
   end
 
   def find_by_created_at(created_at)
-    merchants.detect do |merchant|
-       merchant.created_at == created_at
-    end
+    find_by_attribute(:created_at, created_at)
   end
 
   def find_by_updated_at(updated_at)
-    merchants.detect do |merchant|
-       merchant.updated_at == updated_at
-    end
+    find_by_attribute(:updated_at, updated_at)
   end
 
   def find_all_by_id(id)
-    merchants.select do |merchant|
-      merchant.id == id
-    end
+    find_all_by_attribute(:id, id)
   end
 
   def find_all_by_name(name)
-    merchants.select do |merchant|
-      merchant.name.downcase == name.downcase
-    end
+    find_all_by_attribute(:name, name)
   end
 
   def find_all_by_created_at(created_at)
-    merchants.select do |merchant|
-      merchant.created_at == created_at
-    end
+    find_all_by_attribute(:created_at, created_at)
   end
 
   def find_all_by_updated_at(updated_at)
-    merchants.select do |merchant|
-      merchant.updated_at == updated_at
-    end
+    find_all_by_attribute(:updated_at, updated_at)
   end
 
   def find_items(id)
@@ -108,5 +91,15 @@ class MerchantRepository
       !revenue.nil?
     end
     no_nil_revenues.map { |rev| rev.to_d }.inject(:+)
+  end
+
+  private
+
+  def find_by_attribute(attribute, given)
+    merchants.detect { |merchant| merchant.send(attribute) == given }
+  end
+
+  def find_all_by_attribute(attribute, given)
+    merchants.select { |merchant| merchant.send(attribute) == given }
   end
 end
