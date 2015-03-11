@@ -20,7 +20,9 @@ class Customer
   end
 
   def transactions
-    customer_transactions = invoices.map { |invoice| invoice.transactions }.flatten
+    customer_transactions = invoices.map do |invoice|
+      invoice.transactions
+    end.flatten
   end
 
   def favorite_merchant
@@ -30,7 +32,9 @@ class Customer
 
     successful_merchants = successful_merchants(successful_invoices)
 
-    successful_merchants.max_by { |merchant| successful_merchants.count(merchant) }
+    successful_merchants.max_by do |merchant|
+      successful_merchants.count(merchant)
+    end
   end
 
   def successful_transactions

@@ -54,37 +54,37 @@ class Item
   end
 
   def items_invoices
-    invoice_items.map do |inv_item|
+    @items_invoices ||= invoice_items.map do |inv_item|
       inv_item.nil? ? [] : inv_item.invoice
     end.uniq
   end
 
   def invoices_transactions(items_invoices)
-    items_invoices.map do |invoice|
+    @invoices_transactions ||= items_invoices.map do |invoice|
       invoice.transactions
     end.flatten
   end
 
   def successful_transactions(invoices_transactions)
-    invoices_transactions.reject do |transaction|
+    @successful_transactions ||= invoices_transactions.reject do |transaction|
       !transaction.successful?
     end
   end
 
   def successful_invoices(successful_transactions)
-    successful_transactions.map do |transaction|
+    @successful_invoices ||= successful_transactions.map do |transaction|
       transaction.invoice
     end
   end
 
   def successful_invoice_items(successful_invoices)
-    successful_invoices.map do |invoice|
+    @successful_invoice_items ||= successful_invoices.map do |invoice|
       invoice.invoice_items
     end.flatten
   end
 
   def final_invoice_items(successful_invoice_items)
-    successful_invoice_items.select do |inv_item|
+    @final_invoice_items ||= successful_invoice_items.select do |inv_item|
      inv_item.item_id == id
     end
   end

@@ -1,5 +1,6 @@
 require_relative '../test/test_helper'
 require_relative '../lib/transaction_repository'
+require_relative '../lib/sales_engine'
 
 class TransactionRepositoryTest < Minitest::Test
 
@@ -163,4 +164,12 @@ class TransactionRepositoryTest < Minitest::Test
     assert_equal 4648, result.count
   end
 
+  def test_it_can_create_new_charge
+    sales_engine = SalesEngine.new("./data")
+    sales_engine.startup
+    sales_engine.invoice_repository.invoices[2].charge(credit_card_number: "4444333322221111",
+               credit_card_expiration: "10/13", result: "success")
+
+    assert_equal 5596, sales_engine.transaction_repository.transactions.last.id
+  end
 end

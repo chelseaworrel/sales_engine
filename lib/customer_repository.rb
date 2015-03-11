@@ -29,14 +29,6 @@ class CustomerRepository
     customers.sample
   end
 
-  def find_by_attribute(attribute, given)
-    customers.detect { |customer| customer.send(attribute) == given }
-  end
-
-  def find_all_by_attribute(attribute, given)
-    customers.select { |customer| customer.send(attribute) == given }
-  end
-
   def find_by_id(id)
     find_by_attribute(:id, id)
   end
@@ -87,5 +79,15 @@ class CustomerRepository
 
   def find_invoices(id)
     sales_engine.find_invoices_by_customer_id(id)
+  end
+
+  private
+
+  def find_by_attribute(attribute, given)
+    customers.detect { |customer| customer.send(attribute) == given }
+  end
+
+  def find_all_by_attribute(attribute, given)
+    customers.select { |customer| customer.send(attribute) == given }
   end
 end

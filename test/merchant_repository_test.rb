@@ -8,6 +8,7 @@ class MerchantRepositoryTest < Minitest::Test
 
   def test_it_starts_with_an_empty_array_of_merchants
     merchant_repository = MerchantRepository.new(nil)
+
     assert_equal [], merchant_repository.merchants
   end
 
@@ -103,6 +104,7 @@ class MerchantRepositoryTest < Minitest::Test
     parent = Minitest::Mock.new
     merchant_repository = MerchantRepository.new(parent)
     parent.expect(:find_items_by_merchant_id, [1, 2], [1])
+
     assert_equal [1, 2], merchant_repository.find_items(1)
     parent.verify
   end
@@ -111,6 +113,7 @@ class MerchantRepositoryTest < Minitest::Test
     parent = Minitest::Mock.new
     merchant_repository = MerchantRepository.new(parent)
     parent.expect(:find_invoices_by_merchant_id, [1, 2], [1])
+
     assert_equal [1, 2], merchant_repository.find_invoices(1)
     parent.verify
   end
