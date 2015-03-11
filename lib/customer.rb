@@ -20,7 +20,7 @@ class Customer
   end
 
   def transactions
-    customer_transactions = invoices.map do |invoice|
+    invoices.map do |invoice|
       invoice.transactions
     end.flatten
   end

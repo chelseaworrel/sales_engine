@@ -119,7 +119,7 @@ class MerchantRepositoryTest < Minitest::Test
   end
 
   def test_it_can_find_most_revenue
-    sales_engine = SalesEngine.new("./data")
+    sales_engine = SalesEngine.new("./fixtures")
     sales_engine.startup
     result = sales_engine.merchant_repository.most_revenue(2)
 
@@ -129,18 +129,18 @@ class MerchantRepositoryTest < Minitest::Test
   end
 
   def test_it_can_find_most_items
-    sales_engine = SalesEngine.new("./data")
+    sales_engine = SalesEngine.new("./fixtures")
     sales_engine.startup
     result = sales_engine.merchant_repository.most_items(1)
 
-     assert_equal "Kassulke, O'Hara and Quitzon", result.first.name
+    assert_equal "Balistreri, Schaefer and Kshlerin", result.first.name
   end
 
   def test_it_can_find_total_revenue_by_date
-    sales_engine = SalesEngine.new("./data")
+    sales_engine = SalesEngine.new("./fixtures")
     sales_engine.startup
-    result = sales_engine.merchant_repository.revenue("Monday, 2012-03-27")
+    result = sales_engine.merchant_repository.revenue("Monday, 2012-03-25")
 
-    assert_equal "1908368.05", result.to_digits
+    assert_equal "21067.77", result.to_digits
   end
 end
