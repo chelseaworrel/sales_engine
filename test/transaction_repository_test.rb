@@ -6,6 +6,7 @@ class TransactionRepositoryTest < Minitest::Test
 
   def test_it_starts_with_an_empty_array_of_transactions
     transaction_repository = TransactionRepository.new(nil)
+
     assert_equal [], transaction_repository.transactions
   end
 
@@ -57,15 +58,6 @@ class TransactionRepositoryTest < Minitest::Test
     assert_equal "4515551623735607", result.credit_card_number
   end
 
-  def test_it_can_find_credit_card_expiration_date
-    skip
-    transaction_repository = TransactionRepository.new(nil)
-    transaction_repository.load_data("./data/transactions.csv")
-    result = transaction_repository.find_by_credit_card_number("")
-
-    assert_equal "", result.credit_card_expiration_date
-  end
-
   def test_it_can_find_by_result
     transaction_repository = TransactionRepository.new(nil)
     transaction_repository.load_data("./data/transactions.csv")
@@ -114,15 +106,6 @@ class TransactionRepositoryTest < Minitest::Test
     assert_equal 1, result.count
   end
 
-  def test_it_can_find_all_by_credit_card_expiration_date
-    skip
-    transaction_repository = TransactionRepository.new(nil)
-    transaction_repository.load_data("./data/transactions.csv")
-    result = transaction_repository.find_all_by_credit_card_expiration_date("")
-
-    assert_equal 40, result.count
-  end
-
   def test_it_can_find_all_by_result
     transaction_repository = TransactionRepository.new(nil)
     transaction_repository.load_data("./data/transactions.csv")
@@ -152,6 +135,7 @@ class TransactionRepositoryTest < Minitest::Test
     parent = Minitest::Mock.new
     transaction_repository = TransactionRepository.new(parent)
     parent.expect(:find_invoice_by_id, "pizza", [1])
+    
     assert_equal "pizza", transaction_repository.find_invoice(1)
     parent.verify
   end
@@ -165,11 +149,11 @@ class TransactionRepositoryTest < Minitest::Test
   end
 
   def test_it_can_create_new_charge
-    sales_engine = SalesEngine.new("./data")
+    sales_engine = SalesEngine.new("./fixtures")
     sales_engine.startup
     sales_engine.invoice_repository.invoices[2].charge(credit_card_number: "4444333322221111",
                credit_card_expiration: "10/13", result: "success")
 
-    assert_equal 5596, sales_engine.transaction_repository.transactions.last.id
+    assert_equal 100, sales_engine.transaction_repository.transactions.last.id
   end
 end

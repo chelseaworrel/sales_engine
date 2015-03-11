@@ -62,6 +62,7 @@ class TransactionTest < Minitest::Test
     parent = Minitest::Mock.new
     transaction = Transaction.new(data, parent)
     parent.expect(:find_invoice, "pizza", [1])
+    
     assert_equal "pizza", transaction.invoice
     parent.verify
   end

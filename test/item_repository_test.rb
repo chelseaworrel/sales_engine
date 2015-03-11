@@ -162,18 +162,18 @@ class ItemRepositoryTest < Minitest::Test
   end
 
   def test_it_can_find_most_revenues
-    sales_engine = SalesEngine.new("./data")
+    sales_engine = SalesEngine.new("./fixtures")
     sales_engine.startup
     result = sales_engine.item_repository.most_revenue(3)
 
-    assert_equal "Item Dicta Autem", result.first.name
+    assert_equal "Item Inventore Omnis", result.first.name
   end
 
   def test_it_can_find_most_sold
-    sales_engine = SalesEngine.new("./data")
+    sales_engine = SalesEngine.new("./fixtures")
     sales_engine.startup
     result = sales_engine.item_repository.most_items(5)
 
-    assert_equal "Item Dicta Autem", result.first.name
+    assert_equal "Item Inventore Omnis", result.first.name
   end
 end
