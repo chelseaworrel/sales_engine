@@ -1,8 +1,10 @@
-require 'csv'
+require_relative 'file_loader'
 require_relative 'transaction'
 
 class TransactionRepository
   attr_reader :transactions, :sales_engine
+
+  include LoadFile
 
   def initialize(sales_engine)
     @transactions = []
@@ -10,7 +12,7 @@ class TransactionRepository
   end
 
   def load_data(path)
-    file = CSV.open(path, headers: true, header_converters: :symbol)
+    file = load_file(path)
     file.map do |line|
       transactions << Transaction.new(line, self)
     end

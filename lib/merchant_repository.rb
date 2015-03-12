@@ -1,10 +1,12 @@
-require 'csv'
 require 'bigdecimal'
 require 'bigdecimal/util'
 require_relative 'merchant'
+require_relative 'file_loader'
 
 class MerchantRepository
   attr_reader :merchants, :sales_engine
+
+  include LoadFile
 
   def initialize(sales_engine)
     @merchants = []
@@ -12,7 +14,7 @@ class MerchantRepository
   end
 
   def load_data(path)
-    file = CSV.open(path, headers: true, header_converters: :symbol)
+    file = load_file(path)
     file.map do |line|
       merchants << Merchant.new(line, self)
     end

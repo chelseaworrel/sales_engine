@@ -1,8 +1,10 @@
-require 'csv'
+require_relative 'file_loader'
 require_relative 'invoice_item'
 
 class InvoiceItemRepository
   attr_reader :invoice_items, :sales_engine
+
+  include LoadFile
 
   def initialize(sales_engine)
     @invoice_items = []
@@ -10,7 +12,7 @@ class InvoiceItemRepository
   end
 
   def load_data(path)
-    file = CSV.open(path, headers: true, header_converters: :symbol)
+    file = load_file(path)
     file.map do |line|
       invoice_items << InvoiceItem.new(line, self)
     end
@@ -101,7 +103,6 @@ class InvoiceItemRepository
       quantity = grouped_items.map do |item|
         item.count
       end.uniq.flatten.join
-
       line = {
         id:         "#{invoice_items.last.id + 1}",
         item_id:    item.id,
