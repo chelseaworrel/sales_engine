@@ -1,4 +1,4 @@
-require_relative 'file_loader'
+require_relative 'load_file'
 require_relative 'transaction'
 
 class TransactionRepository
@@ -13,8 +13,8 @@ class TransactionRepository
 
   def load_data(path)
     file = load_file(path)
-    file.map do |line|
-      transactions << Transaction.new(line, self)
+    @transactions = file.map do |line|
+      Transaction.new(line, self)
     end
     file.close
   end

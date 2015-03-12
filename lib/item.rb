@@ -35,7 +35,6 @@ class Item
   end
 
   def revenue
-    items_invoices
 
     invoices_transactions = invoices_transactions(items_invoices)
 
@@ -54,7 +53,6 @@ class Item
   end
 
   def quantity_sold
-    items_invoices
 
     invoices_transactions = invoices_transactions(items_invoices)
 

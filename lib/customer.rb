@@ -26,7 +26,6 @@ class Customer
   end
 
   def favorite_merchant
-    successful_transactions
 
     successful_invoices = successful_invoices(successful_transactions)
 

@@ -26,9 +26,7 @@ class Merchant
   end
 
   def revenue(date=nil)
-    !date.nil? ? date = parse_date(date.to_s) : date
-
-    merchant_transactions
+    date.nil? ? date : date = parse_date(date.to_s)
 
     successful_transactions = successful_transactions(merchant_transactions)
 
@@ -51,7 +49,6 @@ class Merchant
   end
 
   def favorite_customer
-    merchant_transactions
 
     successful_transactions = successful_transactions(merchant_transactions)
 
