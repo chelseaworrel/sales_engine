@@ -37,6 +37,8 @@ class Customer
     end
   end
 
+  private
+
   def successful_transactions
     transactions.select { |transaction| transaction.successful? }
   end
