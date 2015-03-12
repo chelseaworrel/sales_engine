@@ -85,22 +85,3 @@ class SalesEngine
     invoice_item_repository.create_new_items(items, id)
   end
 end
-
-if __FILE__ == $0
-
-  engine = SalesEngine.new("./data")
-  engine.startup
-  customer = engine.customer_repository.random
-  merchant = engine.merchant_repository.random
-  item_1 = engine.item_repository.random
-  item_2 = engine.item_repository.random
-  item_3 = item_1
-  items = [item_1, item_2, item_3]
-  puts engine.invoice_item_repository.invoice_items.size
-  engine.invoice_repository.create(customer: customer,
-                                   merchant: merchant,
-                                   items: items)
-  puts engine.invoice_item_repository.invoice_items.last.inspect
-
-
-end
