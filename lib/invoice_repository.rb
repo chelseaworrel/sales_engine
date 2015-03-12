@@ -1,4 +1,4 @@
-require_relative 'file_loader'
+require_relative 'load_file'
 require_relative 'invoice'
 
 class InvoiceRepository
@@ -13,8 +13,8 @@ class InvoiceRepository
 
   def load_data(path)
     file = load_file(path)
-    file.map do |line|
-      invoices << Invoice.new(line, self)
+    @invoices = file.map do |line|
+      Invoice.new(line, self)
     end
     file.close
   end

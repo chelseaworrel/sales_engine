@@ -57,14 +57,16 @@ class CustomerTest < Minitest::Test
   def test_it_can_get_its_transactions
     sales_engine = SalesEngine.new("./data")
     sales_engine.startup
+    customer = sales_engine.customer_repository.customers[0]
 
-    assert_equal 7, sales_engine.customer_repository.customers[0].transactions.size
+    assert_equal 7, customer.transactions.size
   end
 
   def test_it_can_get_its_favorite_merchant
     sales_engine = SalesEngine.new("./data")
     sales_engine.startup
+    customer = sales_engine.customer_repository.customers[50]
 
-    assert_equal "Rutherford, Bogan and Leannon", sales_engine.customer_repository.customers[50].favorite_merchant.name
+    assert_equal "Rutherford, Bogan and Leannon", customer.favorite_merchant.name
   end
 end

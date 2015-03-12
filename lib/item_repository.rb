@@ -1,4 +1,4 @@
-require_relative 'file_loader'
+require_relative 'load_file'
 require_relative 'item'
 
 class ItemRepository
@@ -13,8 +13,8 @@ class ItemRepository
 
   def load_data(path)
     file = load_file(path)
-    file.map do |line|
-      items << Item.new(line, self)
+    @items = file.map do |line|
+      Item.new(line, self)
     end
     file.close
   end

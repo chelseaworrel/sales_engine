@@ -73,21 +73,24 @@ class MerchantTest < Minitest::Test
   def test_it_can_find_its_favorite_customer
     sales_engine = SalesEngine.new("./data")
     sales_engine.startup
+    merchant = sales_engine.merchant_repository.merchants[50]
 
-    assert_equal "Kuhn", sales_engine.merchant_repository.merchants[50].favorite_customer.last_name
+    assert_equal "Kuhn", merchant.favorite_customer.last_name
   end
 
   def test_it_can_find_pending_customers
     sales_engine = SalesEngine.new("./fixtures")
     sales_engine.startup
+    merchant = sales_engine.merchant_repository.merchants[33]
 
-    assert_equal 1, sales_engine.merchant_repository.merchants[33].customers_with_pending_invoices.count
+    assert_equal 1, merchant.customers_with_pending_invoices.count
   end
 
   def test_it_can_find_its_successful_items
     sales_engine = SalesEngine.new("./fixtures")
     sales_engine.startup
+    merchant = sales_engine.merchant_repository.merchants[14]
 
-    assert_equal 0, sales_engine.merchant_repository.merchants[14].quantity_successful_items
+    assert_equal 0, merchant.quantity_successful_items
   end
 end

@@ -1,7 +1,7 @@
 require 'bigdecimal'
 require 'bigdecimal/util'
 require_relative 'merchant'
-require_relative 'file_loader'
+require_relative 'load_file'
 
 class MerchantRepository
   attr_reader :merchants, :sales_engine
@@ -15,8 +15,8 @@ class MerchantRepository
 
   def load_data(path)
     file = load_file(path)
-    file.map do |line|
-      merchants << Merchant.new(line, self)
+    @merchants = file.map do |line|
+      Merchant.new(line, self)
     end
     file.close
   end

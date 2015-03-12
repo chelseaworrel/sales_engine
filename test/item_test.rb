@@ -64,7 +64,7 @@ class ItemTest < Minitest::Test
     parent = Minitest::Mock.new
     item = Item.new(data, parent)
     parent.expect(:find_invoice_items, [1, 2], [1])
-    
+
     assert_equal [1, 2], item.invoice_items
     parent.verify
   end
@@ -81,21 +81,24 @@ class ItemTest < Minitest::Test
   def test_it_can_find_its_best_day
     sales_engine = SalesEngine.new("./data")
     sales_engine.startup
+    item = sales_engine.item_repository.items[2]
 
-    assert_equal "2012-03-10", sales_engine.item_repository.items[2].best_day.to_s
+    assert_equal "2012-03-10", item.best_day.to_s
   end
 
   def test_it_can_find_its_revenue
     sales_engine = SalesEngine.new("./data")
     sales_engine.startup
+    item = sales_engine.item_repository.items[2]
 
-    assert_equal "29393.91", sales_engine.item_repository.items[2].revenue.to_digits
+    assert_equal "29393.91", item.revenue.to_digits
   end
 
   def test_it_can_find_how_many_sold
     sales_engine = SalesEngine.new("./data")
     sales_engine.startup
+    item = sales_engine.item_repository.items[2]
 
-    assert_equal 91, sales_engine.item_repository.items[2].quantity_sold
+    assert_equal 91, item.quantity_sold
   end
 end

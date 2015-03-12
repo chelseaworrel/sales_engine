@@ -1,4 +1,4 @@
-require_relative 'file_loader'
+require_relative 'load_file'
 require_relative 'customer'
 
 class CustomerRepository
@@ -13,8 +13,8 @@ class CustomerRepository
 
   def load_data(path)
     file = load_file(path)
-    file.map do |line|
-      customers << Customer.new(line, self)
+    @customers = file.map do |line|
+      Customer.new(line, self)
     end
     file.close
   end
@@ -37,13 +37,13 @@ class CustomerRepository
 
   def find_by_first_name(first_name)
     customers.detect do |customer|
-       customer.first_name.downcase == first_name.downcase
+      customer.first_name.downcase == first_name.downcase
     end
   end
 
   def find_by_last_name(last_name)
     customers.detect do |customer|
-       customer.last_name.downcase == last_name.downcase
+      customer.last_name.downcase == last_name.downcase
     end
   end
 
